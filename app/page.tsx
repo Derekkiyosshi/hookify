@@ -107,7 +107,6 @@ function RetentionGraph() {
               fontSize: 12,
               fontWeight: i === 0 ? 600 : 400,
               color: i === 0 ? "#A855F7" : "#4B5563",
-              borderBottom: i === 0 ? "2px solid #A855F7" : "2px solid transparent",
               background: "none",
               border: "none",
               borderBottom: i === 0 ? "2px solid #A855F7" : "2px solid transparent",
