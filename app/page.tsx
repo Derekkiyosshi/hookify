@@ -283,7 +283,7 @@ export default function Page() {
 
       {/* ── Navbar ── */}
       <header style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "rgba(7,9,15,0.8)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(168,85,247,0.1)" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 40px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <HookifyLogo size="md" />
           <nav style={{ display: "flex", gap: 32, alignItems: "center" }} className="hidden md:flex">
             {["Funcionalidades", "Planos", "Sobre"].map(n => (
@@ -312,11 +312,14 @@ export default function Page() {
 
       {/* ── Hero ── */}
       <section style={{ paddingTop: 120, paddingBottom: 80, position: "relative", overflow: "hidden" }}>
+        {/* Background mesh */}
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none" }} />
         {/* Orbs */}
-        <div className="glow-orb" style={{ width: 600, height: 600, background: "radial-gradient(circle, rgba(124,58,237,0.14) 0%, transparent 70%)", top: -200, left: "50%", transform: "translateX(-50%)" }} />
-        <div className="glow-orb" style={{ width: 300, height: 300, background: "radial-gradient(circle, rgba(168,85,247,0.08) 0%, transparent 70%)", bottom: 0, right: "10%" }} />
+        <div className="glow-orb" style={{ width: 700, height: 700, background: "radial-gradient(circle, rgba(124,58,237,0.14) 0%, transparent 70%)", top: -250, left: "50%", transform: "translateX(-50%)" }} />
+        <div className="glow-orb" style={{ width: 350, height: 350, background: "radial-gradient(circle, rgba(168,85,247,0.07) 0%, transparent 70%)", top: "20%", left: "-5%" }} />
+        <div className="glow-orb" style={{ width: 350, height: 350, background: "radial-gradient(circle, rgba(168,85,247,0.07) 0%, transparent 70%)", top: "20%", right: "-5%" }} />
 
-        <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 24px", textAlign: "center", position: "relative", zIndex: 1 }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 40px", textAlign: "center", position: "relative", zIndex: 1 }}>
           <div className="badge" style={{ marginBottom: 24 }}>
             <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#A855F7", animation: "pulse 2s infinite" }} />
             Plataforma de Inteligência Criativa
@@ -350,8 +353,10 @@ export default function Page() {
       <div style={{ margin: "0 32px" }} className="divider" />
 
       {/* ── Problem ── */}
-      <section id="sobre" style={{ padding: "96px 24px" }}>
-        <div style={{ maxWidth: 1000, margin: "0 auto", textAlign: "center" }}>
+      <section id="sobre" style={{ padding: "96px 40px", position: "relative" }}>
+        <div className="glow-orb" style={{ width: 500, height: 500, background: "radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%)", top: "50%", left: "-8%", transform: "translateY(-50%)" }} />
+        <div className="glow-orb" style={{ width: 500, height: 500, background: "radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%)", top: "50%", right: "-8%", transform: "translateY(-50%)" }} />
+        <div style={{ maxWidth: 1300, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 1 }}>
           <div className="badge" style={{ marginBottom: 20 }}>O problema</div>
           <h2 className="heading-lg" style={{ marginBottom: 16 }}>
             Toda operação faz essas perguntas.{" "}
@@ -400,8 +405,8 @@ export default function Page() {
       </section>
 
       {/* ── Features ── */}
-      <section id="funcionalidades" style={{ padding: "0 24px 96px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+      <section id="funcionalidades" style={{ padding: "0 40px 96px" }}>
+        <div style={{ maxWidth: 1400, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
             <div className="badge" style={{ marginBottom: 16 }}>Diferenciais</div>
             <h2 className="heading-lg">
@@ -409,7 +414,7 @@ export default function Page() {
               <span className="gradient-text">escalar criativos</span>
             </h2>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(460px, 1fr))", gap: 20 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(560px, 1fr))", gap: 20 }}>
             {features.map(f => <FeatureCard key={f.title} {...f} />)}
           </div>
         </div>
@@ -419,8 +424,9 @@ export default function Page() {
       <div style={{ margin: "0 32px" }} className="divider" />
 
       {/* ── Pricing ── */}
-      <section id="planos" style={{ padding: "96px 24px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+      <section id="planos" style={{ padding: "96px 40px", position: "relative" }}>
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(124,58,237,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.03) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none" }} />
+        <div style={{ maxWidth: 1400, margin: "0 auto", position: "relative", zIndex: 1 }}>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
             <div className="badge" style={{ marginBottom: 16 }}>Planos</div>
             <h2 className="heading-lg" style={{ marginBottom: 12 }}>
@@ -430,7 +436,7 @@ export default function Page() {
             <p style={{ color: "#6B7280", fontSize: 15 }}>Cancele quando quiser. Sem contrato.</p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 20, maxWidth: 980, margin: "0 auto" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 20 }}>
             {plans.map(p => (
               <div key={p.name} className={p.pro ? "card-price-pro" : "card-price"} style={{ borderRadius: 20, padding: "32px 28px", display: "flex", flexDirection: "column" }}>
                 {p.badge && (
@@ -468,8 +474,8 @@ export default function Page() {
       </section>
 
       {/* ── CTA Final ── */}
-      <section style={{ padding: "0 24px 96px" }}>
-        <div style={{ maxWidth: 700, margin: "0 auto" }}>
+      <section style={{ padding: "0 40px 96px" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <div style={{ background: "linear-gradient(145deg, #140F2D 0%, #0F0D20 100%)", border: "1px solid rgba(168,85,247,0.3)", borderRadius: 24, padding: "60px 40px", textAlign: "center", position: "relative", overflow: "hidden" }}>
             <div className="glow-orb" style={{ width: 400, height: 400, background: "radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%)", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
             <div style={{ position: "relative", zIndex: 1 }}>
@@ -491,8 +497,8 @@ export default function Page() {
       </section>
 
       {/* ── Footer ── */}
-      <footer style={{ borderTop: "1px solid rgba(168,85,247,0.1)", padding: "32px 24px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 20 }}>
+      <footer style={{ borderTop: "1px solid rgba(168,85,247,0.1)", padding: "32px 40px" }}>
+        <div style={{ maxWidth: 1440, margin: "0 auto", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 20 }}>
           <HookifyLogo size="sm" />
           <p style={{ color: "#374151", fontSize: 13 }}>© 2026 Hookify. Todos os direitos reservados.</p>
           <div style={{ display: "flex", gap: 24 }}>
