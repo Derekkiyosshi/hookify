@@ -120,8 +120,8 @@ function RetentionGraph() {
 function FeatureCard({ icon, tag, title, desc, chips }: { icon: React.ReactNode; tag: string; title: string; desc: string; chips: string[] }) {
   return (
     <div className="card-feature rounded-2xl p-7">
-      <div className="flex items-center gap-3 mb-5">
-        <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(124,58,237,0.15)", border: "1px solid rgba(168,85,247,0.2)" }}>
+      <div className="flex items-center gap-5 mb-5">
+        <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(124,58,237,0.15)", border: "1px solid rgba(168,85,247,0.2)" }}>
           {icon}
         </div>
         <div>
