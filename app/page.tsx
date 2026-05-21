@@ -50,47 +50,114 @@ function RetentionGraph() {
   ];
 
   return (
-    <div ref={ref} className="rounded-2xl overflow-hidden" style={{ background: "#0A0D1A", border: "1px solid rgba(168,85,247,0.2)", boxShadow: "0 40px 80px rgba(124,58,237,0.15), 0 0 0 1px rgba(168,85,247,0.08)" }}>
-      {/* Titlebar */}
-      <div className="flex items-center gap-2 px-5 py-3.5" style={{ background: "#060810", borderBottom: "1px solid rgba(168,85,247,0.12)" }}>
-        <div className="w-3 h-3 rounded-full" style={{ background: "#FF5F57" }} />
-        <div className="w-3 h-3 rounded-full" style={{ background: "#FEBC2E" }} />
-        <div className="w-3 h-3 rounded-full" style={{ background: "#28C840" }} />
-        <span className="ml-3 text-xs font-mono" style={{ color: "#4B5563" }}>hookify.app — Criativo_Gancho_V3.mp4</span>
-        <span className="ml-auto text-xs px-2 py-0.5 rounded" style={{ background: "rgba(52,211,153,0.1)", color: "#34D399", border: "1px solid rgba(52,211,153,0.2)" }}>● Ao vivo</span>
+    <div
+      ref={ref}
+      style={{
+        background: "#0A0D1A",
+        border: "1px solid rgba(168,85,247,0.22)",
+        borderRadius: 20,
+        boxShadow: "0 40px 80px rgba(124,58,237,0.15), 0 0 0 1px rgba(168,85,247,0.06)",
+        overflow: "hidden",
+      }}
+    >
+      {/* ── Titlebar ── */}
+      <div style={{
+        background: "#060912",
+        borderBottom: "1px solid rgba(168,85,247,0.1)",
+        padding: "14px 20px",
+        display: "flex",
+        alignItems: "center",
+        gap: 8,
+      }}>
+        {/* Traffic lights */}
+        <div style={{ display: "flex", gap: 7, alignItems: "center", marginRight: 4 }}>
+          <div style={{ width: 12, height: 12, borderRadius: "50%", background: "#FF5F57", flexShrink: 0 }} />
+          <div style={{ width: 12, height: 12, borderRadius: "50%", background: "#FEBC2E", flexShrink: 0 }} />
+          <div style={{ width: 12, height: 12, borderRadius: "50%", background: "#28C840", flexShrink: 0 }} />
+        </div>
+        <span style={{ color: "#4B5563", fontSize: 11, fontFamily: "monospace", flex: 1 }}>
+          hookify.app — Criativo_Gancho_V3.mp4
+        </span>
+        <span style={{
+          background: "rgba(52,211,153,0.1)",
+          color: "#34D399",
+          border: "1px solid rgba(52,211,153,0.25)",
+          fontSize: 11,
+          fontWeight: 600,
+          padding: "4px 10px",
+          borderRadius: 100,
+          display: "flex",
+          alignItems: "center",
+          gap: 5,
+          whiteSpace: "nowrap",
+        }}>
+          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#34D399", display: "inline-block" }} />
+          Ao vivo
+        </span>
       </div>
 
-      <div className="p-5 sm:p-6">
+      {/* ── Body ── */}
+      <div style={{ padding: "24px 24px 20px" }}>
+
         {/* Tabs */}
-        <div className="flex gap-5 mb-5 border-b" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+        <div style={{ display: "flex", gap: 24, marginBottom: 20, borderBottom: "1px solid rgba(255,255,255,0.06)", paddingBottom: 0 }}>
           {["Retenção Geral", "Dispositivos", "Países"].map((t, i) => (
-            <button key={t} className="pb-3 text-xs font-medium transition-colors" style={{ color: i === 0 ? "#A855F7" : "#4B5563", borderBottom: i === 0 ? "2px solid #A855F7" : "2px solid transparent" }}>
+            <button key={t} style={{
+              paddingBottom: 12,
+              fontSize: 12,
+              fontWeight: i === 0 ? 600 : 400,
+              color: i === 0 ? "#A855F7" : "#4B5563",
+              borderBottom: i === 0 ? "2px solid #A855F7" : "2px solid transparent",
+              background: "none",
+              border: "none",
+              borderBottom: i === 0 ? "2px solid #A855F7" : "2px solid transparent",
+              cursor: "pointer",
+              transition: "color .2s",
+            }}>
               {t}
             </button>
           ))}
         </div>
 
-        {/* Chart */}
-        <div className="relative h-44 flex gap-1 mb-2">
-          {/* Y axis */}
-          <div className="flex flex-col justify-between text-right pr-3 pb-1" style={{ color: "#374151", fontSize: "10px", minWidth: 32 }}>
+        {/* Chart area */}
+        <div style={{ display: "flex", gap: 8, height: 180, marginBottom: 8 }}>
+          {/* Y axis labels */}
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            textAlign: "right",
+            paddingBottom: 2,
+            color: "#374151",
+            fontSize: 10,
+            minWidth: 34,
+          }}>
             <span>100%</span><span>75%</span><span>50%</span><span>25%</span><span>0%</span>
           </div>
-          {/* Bars */}
-          <div className="flex-1 relative flex items-end gap-[2px]" style={{ borderLeft: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-            {/* Grid lines */}
+
+          {/* Bars container — extra right padding so 0:30 label doesn't clip */}
+          <div style={{
+            flex: 1,
+            position: "relative",
+            display: "flex",
+            alignItems: "flex-end",
+            gap: 3,
+            borderLeft: "1px solid rgba(255,255,255,0.06)",
+            borderBottom: "1px solid rgba(255,255,255,0.06)",
+            paddingRight: 4,
+          }}>
             {[75, 50, 25].map(p => (
-              <div key={p} className="absolute w-full" style={{ bottom: `${p}%`, borderTop: "1px dashed rgba(255,255,255,0.04)", height: 0 }} />
+              <div key={p} style={{ position: "absolute", bottom: `${p}%`, left: 0, right: 0, borderTop: "1px dashed rgba(255,255,255,0.04)" }} />
             ))}
             {values.map((h, i) => (
               <div
                 key={i}
-                className="flex-1 rounded-t-sm transition-all"
                 style={{
+                  flex: 1,
+                  borderRadius: "3px 3px 0 0",
                   height: show ? `${h}%` : "0%",
-                  background: `linear-gradient(180deg, rgba(168,85,247,${0.5 + (h / 250)}) 0%, rgba(124,58,237,0.3) 100%)`,
-                  transitionDuration: `${600 + i * 40}ms`,
-                  transitionTimingFunction: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+                  background: `linear-gradient(180deg, rgba(168,85,247,${0.55 + h / 280}) 0%, rgba(124,58,237,0.28) 100%)`,
+                  transition: `height ${620 + i * 38}ms cubic-bezier(0.34,1.4,0.64,1)`,
                 }}
               />
             ))}
@@ -98,16 +165,30 @@ function RetentionGraph() {
         </div>
 
         {/* X axis */}
-        <div className="flex justify-between ml-8 mb-6" style={{ color: "#374151", fontSize: "10px" }}>
+        <div style={{
+          display: "flex",
+          justifyContent: "space-between",
+          paddingLeft: 42,
+          paddingRight: 4,
+          marginBottom: 20,
+          color: "#374151",
+          fontSize: 10,
+        }}>
           <span>0:00</span><span>0:08</span><span>0:15</span><span>0:23</span><span>0:30</span>
         </div>
 
-        {/* Metrics */}
-        <div className="grid grid-cols-3 gap-2.5">
+        {/* Metrics grid */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
           {metrics.map(m => (
-            <div key={m.label} className="rounded-xl p-3 text-center" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <div className="text-sm font-bold mb-0.5" style={{ color: m.color }}>{m.value}</div>
-              <div style={{ color: "#4B5563", fontSize: "10px" }}>{m.label}</div>
+            <div key={m.label} style={{
+              background: "rgba(255,255,255,0.025)",
+              border: "1px solid rgba(255,255,255,0.055)",
+              borderRadius: 12,
+              padding: "12px 10px",
+              textAlign: "center",
+            }}>
+              <div style={{ fontSize: 15, fontWeight: 700, color: m.color, marginBottom: 4 }}>{m.value}</div>
+              <div style={{ fontSize: 10, color: "#4B5563" }}>{m.label}</div>
             </div>
           ))}
         </div>
