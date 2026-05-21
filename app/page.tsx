@@ -119,20 +119,21 @@ function RetentionGraph() {
 /* ─── Feature Card ─── */
 function FeatureCard({ icon, tag, title, desc, chips }: { icon: React.ReactNode; tag: string; title: string; desc: string; chips: string[] }) {
   return (
-    <div className="card-feature rounded-2xl p-7">
-      <div className="flex items-center gap-5 mb-5">
-        <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(124,58,237,0.15)", border: "1px solid rgba(168,85,247,0.2)" }}>
+    <div className="card-feature rounded-2xl" style={{ padding: "28px 28px 24px" }}>
+      {/* Icon + tag + title */}
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 20, marginBottom: 18 }}>
+        <div style={{ width: 52, height: 52, minWidth: 52, borderRadius: 14, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(124,58,237,0.15)", border: "1px solid rgba(168,85,247,0.22)" }}>
           {icon}
         </div>
-        <div>
-          <span className="chip">{tag}</span>
-          <h3 className="text-base font-bold mt-1.5 text-white">{title}</h3>
+        <div style={{ paddingTop: 2 }}>
+          <span className="chip" style={{ marginBottom: 8, display: "inline-block" }}>{tag}</span>
+          <h3 style={{ fontSize: 17, fontWeight: 700, color: "#fff", lineHeight: 1.3 }}>{title}</h3>
         </div>
       </div>
-      <p className="text-sm leading-relaxed mb-5" style={{ color: "#94A3B8" }}>{desc}</p>
-      <div className="flex flex-wrap gap-2">
+      <p style={{ fontSize: 13.5, lineHeight: 1.75, color: "#94A3B8", marginBottom: 18 }}>{desc}</p>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
         {chips.map(c => (
-          <span key={c} className="text-xs px-2.5 py-1 rounded-full" style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(168,85,247,0.14)", color: "#A78BFA" }}>{c}</span>
+          <span key={c} style={{ fontSize: 11.5, padding: "4px 11px", borderRadius: 100, background: "rgba(124,58,237,0.08)", border: "1px solid rgba(168,85,247,0.14)", color: "#A78BFA" }}>{c}</span>
         ))}
       </div>
     </div>
@@ -270,19 +271,50 @@ export default function Page() {
 
       {/* ── Problem ── */}
       <section id="sobre" style={{ padding: "96px 24px" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto", textAlign: "center" }}>
+        <div style={{ maxWidth: 1000, margin: "0 auto", textAlign: "center" }}>
           <div className="badge" style={{ marginBottom: 20 }}>O problema</div>
-          <h2 className="heading-lg" style={{ marginBottom: 40 }}>
-            O algoritmo já encontra os compradores.{" "}
-            <span className="gradient-text">O criativo define quem escala.</span>
+          <h2 className="heading-lg" style={{ marginBottom: 16 }}>
+            Toda operação faz essas perguntas.{" "}
+            <span className="gradient-text">Ninguém sabe responder.</span>
           </h2>
-          <div style={{ background: "linear-gradient(145deg, #0E1120, #0B0E1A)", border: "1px solid rgba(168,85,247,0.12)", borderRadius: 20, padding: "36px 40px", textAlign: "left" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 18, color: "#6B7280", lineHeight: 1.8, fontSize: 15 }}>
-              <p>Hoje o mercado acredita que performance vem de público, campanha e estrutura. Mas a verdade é que o algoritmo já encontra compradores sozinho. O que realmente define quais ofertas escalam é o criativo.</p>
-              <p>O problema é que ninguém consegue medir isso de verdade. Enquanto o mercado analisa apenas métricas superficiais como CTR, CPC e ROAS, a parte mais importante do anúncio continua invisível: o hook que prende, o corpo que retém, a emoção que gera desejo e o CTA que converte.</p>
-              <p style={{ color: "#D8B4FE", fontWeight: 600 }}>A Hookify nasceu para resolver exatamente isso. Não somos apenas um tracker. Somos uma plataforma de inteligência criativa que transforma anúncios em dados acionáveis.</p>
-              <p>Porque o futuro do tráfego não está em criar mais campanhas. Está em entender, prever e escalar os criativos certos.</p>
-            </div>
+          <p style={{ color: "#6B7280", fontSize: 16, lineHeight: 1.7, maxWidth: 580, margin: "0 auto 52px" }}>
+            Enquanto o mercado analisa CTR e ROAS, a parte que realmente define quem escala continua invisível: o criativo.
+          </p>
+
+          {/* Pain point cards */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16, marginBottom: 48 }}>
+            {[
+              {
+                q: "Qual criativo converte mais Upsell?",
+                a: "O gestor precisa 'caçar' manualmente. Não existe sistema que entrega essa informação em tempo real.",
+                emoji: "🔍",
+              },
+              {
+                q: "Por que esse criativo morreu?",
+                a: "O copy nunca tem 100% de certeza. Baseia tudo em feeling e métricas superficiais, sem visualização clara.",
+                emoji: "💀",
+              },
+              {
+                q: "Como salvar esse criativo?",
+                a: "A equipe pede relatório ao gestor, analisa no Excel... Nunca existiu uma fábrica automática de novos ads.",
+                emoji: "🛠️",
+              },
+            ].map(card => (
+              <div key={card.q} style={{ background: "linear-gradient(145deg, #0E1120, #0B0E1A)", border: "1px solid rgba(168,85,247,0.12)", borderRadius: 18, padding: "28px 24px", textAlign: "left" }}>
+                <div style={{ fontSize: 28, marginBottom: 14 }}>{card.emoji}</div>
+                <p style={{ fontSize: 15, fontWeight: 700, color: "#E2E8F0", marginBottom: 12, lineHeight: 1.4 }}>"{card.q}"</p>
+                <p style={{ fontSize: 13, color: "#6B7280", lineHeight: 1.7 }}>{card.a}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Solution statement */}
+          <div style={{ background: "linear-gradient(135deg, rgba(124,58,237,0.12) 0%, rgba(168,85,247,0.06) 100%)", border: "1px solid rgba(168,85,247,0.25)", borderRadius: 16, padding: "24px 32px", display: "inline-block", maxWidth: 700 }}>
+            <p style={{ fontSize: 15, color: "#D8B4FE", fontWeight: 600, lineHeight: 1.7 }}>
+              A Hookify transforma essas perguntas em respostas. Não somos apenas um tracker —
+              somos uma plataforma de inteligência criativa que revela{" "}
+              <span style={{ color: "#fff" }}>por que determinados criativos vendem e outros não.</span>
+            </p>
           </div>
         </div>
       </section>
