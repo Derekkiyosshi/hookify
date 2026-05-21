@@ -2,93 +2,112 @@
 
 import { useState, useEffect, useRef } from "react";
 
+/* ─── Logo ─── */
 function HookifyLogo({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
-  const sizes = { sm: 28, md: 36, lg: 48 };
-  const s = sizes[size];
-  const textClass = size === "sm" ? "text-lg" : size === "lg" ? "text-3xl" : "text-2xl";
-
+  const dims = { sm: 26, md: 34, lg: 44 };
+  const txt = { sm: "text-lg", md: "text-xl", lg: "text-3xl" };
+  const d = dims[size];
   return (
-    <div className="flex items-center gap-2.5">
-      <svg width={s} height={s} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div className="flex items-center gap-2.5 select-none">
+      <svg width={d} height={d} viewBox="0 0 100 100" fill="none">
         <defs>
-          <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#A855F7" />
+          <linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#C084FC" />
             <stop offset="100%" stopColor="#7C3AED" />
           </linearGradient>
         </defs>
-        <rect x="8" y="10" width="28" height="65" rx="7" fill="url(#logoGrad)" />
-        <rect x="64" y="10" width="28" height="65" rx="7" fill="url(#logoGrad)" opacity="0.85" />
-        <path d="M36 62 Q50 82 64 62" stroke="url(#logoGrad)" strokeWidth="10" strokeLinecap="round" fill="none" />
+        <rect x="8" y="8" width="30" height="68" rx="8" fill="url(#lg1)" />
+        <rect x="62" y="8" width="30" height="68" rx="8" fill="url(#lg1)" opacity="0.8" />
+        <path d="M38 64 Q50 85 62 64" stroke="url(#lg1)" strokeWidth="11" strokeLinecap="round" fill="none" />
       </svg>
-      <span className={`font-bold tracking-tight ${textClass}`}>
+      <span className={`font-extrabold tracking-tight ${txt[size]}`}>
         <span className="text-white">Hook</span>
-        <span className="gradient-text-purple">ify</span>
+        <span className="gradient-text">ify</span>
       </span>
     </div>
   );
 }
 
-function RetentionGraphMock() {
-  const bars = [100, 78, 65, 58, 54, 51, 49, 47, 46, 44, 43, 42, 40, 39, 38, 36, 35, 34, 33, 31];
-  const [visible, setVisible] = useState(false);
+/* ─── Graph Mock ─── */
+function RetentionGraph() {
+  const values = [100, 82, 70, 63, 58, 55, 52, 50, 48, 46, 44, 43, 41, 40, 39, 37, 36, 35, 34, 32];
+  const [show, setShow] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.3 });
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) setShow(true); }, { threshold: 0.2 });
+    if (ref.current) io.observe(ref.current);
+    return () => io.disconnect();
   }, []);
 
   const metrics = [
-    { label: "Visualizações", value: "12.4K" },
-    { label: "Hook Rate", value: "78%" },
-    { label: "Body Rate", value: "51%" },
-    { label: "CTA Rate", value: "31%" },
-    { label: "Conversões", value: "347" },
-    { label: "Receita", value: "R$48.2K" },
+    { label: "Visualizações", value: "12.4K", color: "#A78BFA" },
+    { label: "Hook Rate", value: "82%", color: "#34D399" },
+    { label: "Body Rate", value: "52%", color: "#60A5FA" },
+    { label: "CTA Rate", value: "32%", color: "#F472B6" },
+    { label: "Conversões", value: "347", color: "#FBBF24" },
+    { label: "Receita", value: "R$48K", color: "#34D399" },
   ];
 
   return (
-    <div ref={ref} className="rounded-2xl overflow-hidden border border-purple-500/20 bg-[#0D1122]">
-      <div className="flex items-center gap-2 px-5 py-3 border-b border-purple-500/10 bg-[#0a0e1a]">
-        <div className="w-3 h-3 rounded-full bg-red-500/70" />
-        <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
-        <div className="w-3 h-3 rounded-full bg-green-500/70" />
-        <span className="ml-3 text-xs text-gray-400 font-mono">hookify.app — Criativo_Gancho_V3.mp4</span>
+    <div ref={ref} className="rounded-2xl overflow-hidden" style={{ background: "#0A0D1A", border: "1px solid rgba(168,85,247,0.2)", boxShadow: "0 40px 80px rgba(124,58,237,0.15), 0 0 0 1px rgba(168,85,247,0.08)" }}>
+      {/* Titlebar */}
+      <div className="flex items-center gap-2 px-5 py-3.5" style={{ background: "#060810", borderBottom: "1px solid rgba(168,85,247,0.12)" }}>
+        <div className="w-3 h-3 rounded-full" style={{ background: "#FF5F57" }} />
+        <div className="w-3 h-3 rounded-full" style={{ background: "#FEBC2E" }} />
+        <div className="w-3 h-3 rounded-full" style={{ background: "#28C840" }} />
+        <span className="ml-3 text-xs font-mono" style={{ color: "#4B5563" }}>hookify.app — Criativo_Gancho_V3.mp4</span>
+        <span className="ml-auto text-xs px-2 py-0.5 rounded" style={{ background: "rgba(52,211,153,0.1)", color: "#34D399", border: "1px solid rgba(52,211,153,0.2)" }}>● Ao vivo</span>
       </div>
 
-      <div className="p-5">
-        <div className="flex gap-4 mb-4 text-xs">
-          {["Retenção Geral", "Dispositivos", "Países"].map((tab, i) => (
-            <button key={tab} className={`pb-1 transition-colors ${i === 0 ? "text-purple-400 border-b border-purple-400" : "text-gray-500 hover:text-gray-300"}`}>
-              {tab}
+      <div className="p-5 sm:p-6">
+        {/* Tabs */}
+        <div className="flex gap-5 mb-5 border-b" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+          {["Retenção Geral", "Dispositivos", "Países"].map((t, i) => (
+            <button key={t} className="pb-3 text-xs font-medium transition-colors" style={{ color: i === 0 ? "#A855F7" : "#4B5563", borderBottom: i === 0 ? "2px solid #A855F7" : "2px solid transparent" }}>
+              {t}
             </button>
           ))}
         </div>
 
-        <div className="relative h-40 flex items-end gap-1 mb-1">
-          <div className="absolute left-0 top-0 bottom-0 flex flex-col justify-between text-[10px] text-gray-600 pr-2">
+        {/* Chart */}
+        <div className="relative h-44 flex gap-1 mb-2">
+          {/* Y axis */}
+          <div className="flex flex-col justify-between text-right pr-3 pb-1" style={{ color: "#374151", fontSize: "10px", minWidth: 32 }}>
             <span>100%</span><span>75%</span><span>50%</span><span>25%</span><span>0%</span>
           </div>
-          <div className="ml-6 flex-1 flex items-end gap-[2px]">
-            {bars.map((h, i) => (
+          {/* Bars */}
+          <div className="flex-1 relative flex items-end gap-[2px]" style={{ borderLeft: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+            {/* Grid lines */}
+            {[75, 50, 25].map(p => (
+              <div key={p} className="absolute w-full" style={{ bottom: `${p}%`, borderTop: "1px dashed rgba(255,255,255,0.04)", height: 0 }} />
+            ))}
+            {values.map((h, i) => (
               <div
                 key={i}
-                className="flex-1 rounded-t-sm bg-gradient-to-t from-green-600/80 to-green-400/60 transition-all duration-700"
-                style={{ height: visible ? `${h}%` : "0%", transitionDelay: `${i * 30}ms` }}
+                className="flex-1 rounded-t-sm transition-all"
+                style={{
+                  height: show ? `${h}%` : "0%",
+                  background: `linear-gradient(180deg, rgba(168,85,247,${0.5 + (h / 250)}) 0%, rgba(124,58,237,0.3) 100%)`,
+                  transitionDuration: `${600 + i * 40}ms`,
+                  transitionTimingFunction: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+                }}
               />
             ))}
           </div>
         </div>
-        <div className="ml-6 flex justify-between text-[10px] text-gray-600 mb-5">
-          <span>0:00</span><span>0:05</span><span>0:10</span><span>0:15</span><span>0:30</span>
+
+        {/* X axis */}
+        <div className="flex justify-between ml-8 mb-6" style={{ color: "#374151", fontSize: "10px" }}>
+          <span>0:00</span><span>0:08</span><span>0:15</span><span>0:23</span><span>0:30</span>
         </div>
 
-        <div className="grid grid-cols-3 gap-2">
-          {metrics.map((m) => (
-            <div key={m.label} className="bg-[#080B18] rounded-lg p-2.5 text-center">
-              <div className="text-sm font-bold text-white">{m.value}</div>
-              <div className="text-[10px] text-gray-500 mt-0.5">{m.label}</div>
+        {/* Metrics */}
+        <div className="grid grid-cols-3 gap-2.5">
+          {metrics.map(m => (
+            <div key={m.label} className="rounded-xl p-3 text-center" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <div className="text-sm font-bold mb-0.5" style={{ color: m.color }}>{m.value}</div>
+              <div style={{ color: "#4B5563", fontSize: "10px" }}>{m.label}</div>
             </div>
           ))}
         </div>
@@ -97,345 +116,279 @@ function RetentionGraphMock() {
   );
 }
 
+/* ─── Feature Card ─── */
+function FeatureCard({ icon, tag, title, desc, chips }: { icon: React.ReactNode; tag: string; title: string; desc: string; chips: string[] }) {
+  return (
+    <div className="card-feature rounded-2xl p-7">
+      <div className="flex items-center gap-3 mb-5">
+        <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(124,58,237,0.15)", border: "1px solid rgba(168,85,247,0.2)" }}>
+          {icon}
+        </div>
+        <div>
+          <span className="chip">{tag}</span>
+          <h3 className="text-base font-bold mt-1.5 text-white">{title}</h3>
+        </div>
+      </div>
+      <p className="text-sm leading-relaxed mb-5" style={{ color: "#94A3B8" }}>{desc}</p>
+      <div className="flex flex-wrap gap-2">
+        {chips.map(c => (
+          <span key={c} className="text-xs px-2.5 py-1 rounded-full" style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(168,85,247,0.14)", color: "#A78BFA" }}>{c}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Icons ─── */
+const IconGraph = () => (
+  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#A855F7" strokeWidth={1.8}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4v16" />
+  </svg>
+);
+const IconAI = () => (
+  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#A855F7" strokeWidth={1.8}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+  </svg>
+);
+const IconLab = () => (
+  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#A855F7" strokeWidth={1.8}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M5 14.5l-1.5 5.5h17L19 14.5M5 14.5h14.5" />
+  </svg>
+);
+const IconClock = () => (
+  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#A855F7" strokeWidth={1.8}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+);
+const IconCheck = () => (
+  <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 20 20">
+    <circle cx="10" cy="10" r="9" fill="rgba(124,58,237,0.18)" />
+    <path d="M6.5 10l2.5 2.5 4.5-4.5" stroke="#A855F7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+/* ─── Data ─── */
 const features = [
-  {
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="url(#g1)">
-        <defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#A855F7"/><stop offset="100%" stopColor="#7C3AED"/></linearGradient></defs>
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4v16" />
-      </svg>
-    ),
-    tag: "Core",
-    title: "Gráfico do Criativo",
-    desc: "Gráfico de retenção segundo a segundo do seu criativo. Visualize exatamente onde o público dropa e identifique pontos de melhoria com precisão cirúrgica.",
-    metrics: ["Hook Rate", "Body Rate", "CTA Rate", "Retenção"],
-  },
-  {
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="url(#g2)">
-        <defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#A855F7"/><stop offset="100%" stopColor="#7C3AED"/></linearGradient></defs>
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1 1 .03 2.699-1.32 2.407l-1.279-.288a23.605 23.605 0 00-10.447.006l-1.286.289c-1.352.304-2.319-1.4-1.317-2.402l1.407-1.407" />
-      </svg>
-    ),
-    tag: "IA",
-    title: "IA de Sugestões",
-    desc: "Chat inteligente treinado para o universo de criativos. Diagnóstico em linguagem natural, sugestões de melhorias e respostas técnicas para cada queda no gráfico.",
-    metrics: ["Diagnóstico automático", "Sugestões de copy", "Análise por bloco"],
-  },
-  {
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="url(#g3)">
-        <defs><linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#A855F7"/><stop offset="100%" stopColor="#7C3AED"/></linearGradient></defs>
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.348 14.651a3.75 3.75 0 010-5.303m5.304 0a3.75 3.75 0 010 5.303m-7.425 2.122a6.75 6.75 0 010-9.546m9.546 0a6.75 6.75 0 010 9.546M5.106 18.894c-3.808-3.808-3.808-9.98 0-13.789m13.788 0c3.808 3.808 3.808 9.981 0 13.79M12 12h.008v.007H12V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-      </svg>
-    ),
-    tag: "Exclusivo",
-    title: "Fábrica Frankstein",
-    desc: "Combine o melhor de cada criativo com um clique. Gancho do criativo A + body do criativo B + CTA do criativo C = novo criativo otimizado pronto para testar.",
-    metrics: ["Merge automático", "Variações em 1 clique", "Pronto para subir na Meta"],
-  },
-  {
-    icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="url(#g4)">
-        <defs><linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#A855F7"/><stop offset="100%" stopColor="#7C3AED"/></linearGradient></defs>
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-    tag: "Analytics",
-    title: "Time-Lapse",
-    desc: "Histórico completo do criativo: 24h, 7 dias, 30 dias. Entenda o exato momento em que ele oscilou e domine a sazonalidade de cada anúncio.",
-    metrics: ["24h / 7d / 30d", "Sazonalidade", "Histórico de performance"],
-  },
+  { icon: <IconGraph />, tag: "Core", title: "Gráfico do Criativo", desc: "Gráfico de retenção segundo a segundo do seu criativo. Visualize exatamente onde o público dropa e identifique pontos de melhoria com precisão cirúrgica.", chips: ["Hook Rate", "Body Rate", "CTA Rate", "Retenção"] },
+  { icon: <IconAI />, tag: "IA", title: "IA de Sugestões", desc: "Chat inteligente treinado para o universo de criativos. Diagnóstico em linguagem natural, sugestões de melhorias e respostas técnicas para cada queda no gráfico.", chips: ["Diagnóstico automático", "Sugestões de copy", "Análise por bloco"] },
+  { icon: <IconLab />, tag: "Exclusivo", title: "Fábrica Frankstein", desc: "Combine o melhor de cada criativo com um clique. Gancho do criativo A + body do B + CTA do C = novo criativo otimizado pronto para subir na Meta.", chips: ["Merge automático", "Variações em 1 clique", "Pronto para a Meta"] },
+  { icon: <IconClock />, tag: "Analytics", title: "Time-Lapse", desc: "Histórico completo do criativo: 24h, 7 dias, 30 dias. Entenda o exato momento em que ele oscilou positivamente ou negativamente e domine a sazonalidade.", chips: ["24h / 7d / 30d", "Sazonalidade", "Histórico completo"] },
 ];
 
 const plans = [
   {
-    name: "Starter",
-    price: "R$147",
-    period: "/mês",
-    desc: "Para copywriters e gestores iniciando a análise profissional de criativos.",
-    features: [
-      "Até 10 criativos ativos",
-      "Gráfico de retenção",
-      "Métricas completas",
-      "IA de sugestões (50/mês)",
-      "Time-lapse 7 dias",
-    ],
-    cta: "Começar agora",
-    featured: false,
+    name: "Starter", price: "R$147", desc: "Para copywriters e gestores iniciando a análise profissional de criativos.",
+    features: ["Até 10 criativos ativos", "Gráfico de retenção", "Métricas completas", "IA de sugestões (50/mês)", "Time-lapse 7 dias"],
+    cta: "Começar agora", pro: false,
   },
   {
-    name: "Pro",
-    price: "R$297",
-    period: "/mês",
-    desc: "Para operações que testam criativos em escala e precisam de velocidade.",
-    features: [
-      "Criativos ilimitados",
-      "Gráfico de retenção",
-      "Métricas completas",
-      "IA de sugestões ilimitada",
-      "Time-lapse 30 dias",
-      "Fábrica Frankstein",
-      "Comparação lado a lado",
-    ],
-    cta: "Escolher Pro",
-    featured: true,
-    badge: "Mais popular",
+    name: "Pro", price: "R$297", desc: "Para operações que testam criativos em escala e precisam de velocidade.",
+    features: ["Criativos ilimitados", "Gráfico de retenção", "Métricas completas", "IA de sugestões ilimitada", "Time-lapse 30 dias", "Fábrica Frankstein", "Comparação lado a lado"],
+    cta: "Escolher Pro", pro: true, badge: "Mais popular",
   },
   {
-    name: "Scale",
-    price: "R$597",
-    period: "/mês",
-    desc: "Para grandes operações de NUTRA, lançamentos e direct response.",
-    features: [
-      "Tudo do Pro",
-      "Múltiplas contas Meta",
-      "API de integração",
-      "Relatórios personalizados",
-      "Suporte prioritário",
-      "Onboarding dedicado",
-    ],
-    cta: "Falar com equipe",
-    featured: false,
+    name: "Scale", price: "R$597", desc: "Para grandes operações de NUTRA, lançamentos e direct response.",
+    features: ["Tudo do Pro", "Múltiplas contas Meta", "API de integração", "Relatórios personalizados", "Suporte prioritário", "Onboarding dedicado"],
+    cta: "Falar com equipe", pro: false,
   },
 ];
 
-export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
+/* ─── Page ─── */
+export default function Page() {
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className="min-h-screen" style={{ background: "#080B18", fontFamily: "var(--font-geist-sans), system-ui, sans-serif" }}>
+    <div style={{ background: "#07090F", fontFamily: "'Inter', system-ui, sans-serif", minHeight: "100vh" }}>
 
-      {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-purple-500/10" style={{ background: "rgba(8,11,24,0.85)", backdropFilter: "blur(20px)" }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <HookifyLogo size="md" />
-            <div className="hidden md:flex items-center gap-8 text-sm text-gray-400">
-              <a href="#features" className="hover:text-white transition-colors">Funcionalidades</a>
-              <a href="#pricing" className="hover:text-white transition-colors">Planos</a>
-              <a href="#about" className="hover:text-white transition-colors">Sobre</a>
-            </div>
-            <div className="hidden md:flex items-center gap-3">
-              <button className="btn-secondary px-4 py-2 rounded-lg text-sm font-medium">Entrar</button>
-              <button className="btn-primary px-4 py-2 rounded-lg text-sm font-medium">Começar grátis</button>
-            </div>
-            <button className="md:hidden text-gray-400 hover:text-white" onClick={() => setMenuOpen(!menuOpen)}>
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={menuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-              </svg>
+      {/* ── Navbar ── */}
+      <header style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "rgba(7,9,15,0.8)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(168,85,247,0.1)" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <HookifyLogo size="md" />
+          <nav style={{ display: "flex", gap: 32, alignItems: "center" }} className="hidden md:flex">
+            {["Funcionalidades", "Planos", "Sobre"].map(n => (
+              <a key={n} href={`#${n.toLowerCase()}`} style={{ color: "#6B7280", fontSize: 14, textDecoration: "none", transition: "color .2s" }}
+                onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
+                onMouseLeave={e => (e.currentTarget.style.color = "#6B7280")}>{n}</a>
+            ))}
+          </nav>
+          <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+            <button className="btn-ghost hidden md:block" style={{ padding: "8px 18px", borderRadius: 10, fontSize: 14 }}>Entrar</button>
+            <button className="btn-primary" style={{ padding: "9px 20px", borderRadius: 10, fontSize: 14 }}>Começar grátis</button>
+            <button onClick={() => setOpen(!open)} className="md:hidden" style={{ color: "#94A3B8", background: "none", border: "none", cursor: "pointer" }}>
+              <svg width={22} height={22} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={open ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} /></svg>
             </button>
           </div>
         </div>
-        {menuOpen && (
-          <div className="md:hidden px-4 pb-4 flex flex-col gap-3 text-sm border-t border-purple-500/10 pt-4">
-            <a href="#features" className="text-gray-400 hover:text-white" onClick={() => setMenuOpen(false)}>Funcionalidades</a>
-            <a href="#pricing" className="text-gray-400 hover:text-white" onClick={() => setMenuOpen(false)}>Planos</a>
-            <a href="#about" className="text-gray-400 hover:text-white" onClick={() => setMenuOpen(false)}>Sobre</a>
-            <button className="btn-primary px-4 py-2 rounded-lg font-medium mt-2">Começar grátis</button>
+        {open && (
+          <div style={{ padding: "12px 24px 20px", borderTop: "1px solid rgba(168,85,247,0.1)", display: "flex", flexDirection: "column", gap: 12 }}>
+            {["Funcionalidades", "Planos", "Sobre"].map(n => (
+              <a key={n} href={`#${n.toLowerCase()}`} onClick={() => setOpen(false)} style={{ color: "#9CA3AF", fontSize: 15, textDecoration: "none" }}>{n}</a>
+            ))}
+            <button className="btn-primary" style={{ padding: "11px", borderRadius: 10, fontSize: 14, marginTop: 4 }}>Começar grátis</button>
           </div>
         )}
-      </nav>
+      </header>
 
-      {/* Hero */}
-      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
-        <div className="hero-glow left-1/2 -translate-x-1/2 top-0 -translate-y-1/4" style={{ position: "absolute", width: "700px", height: "700px", background: "radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%)", pointerEvents: "none" }} />
+      {/* ── Hero ── */}
+      <section style={{ paddingTop: 120, paddingBottom: 80, position: "relative", overflow: "hidden" }}>
+        {/* Orbs */}
+        <div className="glow-orb" style={{ width: 600, height: 600, background: "radial-gradient(circle, rgba(124,58,237,0.14) 0%, transparent 70%)", top: -200, left: "50%", transform: "translateX(-50%)" }} />
+        <div className="glow-orb" style={{ width: 300, height: 300, background: "radial-gradient(circle, rgba(168,85,247,0.08) 0%, transparent 70%)", bottom: 0, right: "10%" }} />
 
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 badge px-4 py-1.5 rounded-full text-sm font-medium mb-6">
-              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-              Plataforma de Inteligência Criativa
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight mb-6 max-w-4xl mx-auto">
-              Pare de analisar apenas{" "}
-              <span className="gradient-text">campanhas.</span>
-              <br />
-              Analise o que realmente{" "}
-              <span className="gradient-text-purple">vende: o criativo.</span>
-            </h1>
-
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-              Enquanto o mercado analisa CTR e ROAS, você vai enxergar o que ninguém vê:
-              o hook que prende, o corpo que retém, a emoção que converte.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button className="btn-primary px-8 py-3.5 rounded-xl text-base font-semibold w-full sm:w-auto">
-                Começar grátis — 7 dias
-              </button>
-              <button className="btn-secondary px-8 py-3.5 rounded-xl text-base font-medium w-full sm:w-auto flex items-center justify-center gap-2">
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                Ver demonstração
-              </button>
-            </div>
+        <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 24px", textAlign: "center", position: "relative", zIndex: 1 }}>
+          <div className="badge" style={{ marginBottom: 24 }}>
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#A855F7", animation: "pulse 2s infinite" }} />
+            Plataforma de Inteligência Criativa
           </div>
 
-          {/* Graph Preview */}
-          <div className="max-w-3xl mx-auto">
-            <RetentionGraphMock />
+          <h1 className="heading-xl" style={{ marginBottom: 20 }}>
+            <span className="gradient-text-white">Pare de analisar apenas campanhas.</span>
+            <br />
+            <span className="gradient-text">Analise o que realmente vende: o criativo.</span>
+          </h1>
+
+          <p style={{ color: "#6B7280", fontSize: 18, lineHeight: 1.7, maxWidth: 580, margin: "0 auto 40px" }}>
+            Enquanto o mercado olha CTR e ROAS, você vai enxergar o que ninguém vê — o hook que prende, o corpo que retém e o CTA que converte.
+          </p>
+
+          <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap", marginBottom: 64 }}>
+            <button className="btn-primary" style={{ padding: "14px 32px", borderRadius: 12, fontSize: 15 }}>
+              Começar grátis — 7 dias
+            </button>
+            <button className="btn-ghost" style={{ padding: "14px 32px", borderRadius: 12, fontSize: 15, display: "flex", alignItems: "center", gap: 8 }}>
+              <svg width={16} height={16} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              Ver demonstração
+            </button>
           </div>
+
+          <RetentionGraph />
         </div>
       </section>
 
-      {/* Divider */}
-      <div className="divider mx-8" />
+      {/* ── Divider ── */}
+      <div style={{ margin: "0 32px" }} className="divider" />
 
-      {/* Problem / Big Idea */}
-      <section id="about" className="py-24 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="badge inline-flex px-3 py-1 rounded-full text-xs font-medium mb-6">O problema</div>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-8 leading-snug">
+      {/* ── Problem ── */}
+      <section id="sobre" style={{ padding: "96px 24px" }}>
+        <div style={{ maxWidth: 760, margin: "0 auto", textAlign: "center" }}>
+          <div className="badge" style={{ marginBottom: 20 }}>O problema</div>
+          <h2 className="heading-lg" style={{ marginBottom: 40 }}>
             O algoritmo já encontra os compradores.{" "}
-            <span className="gradient-text">O criativo é o que define quem escala.</span>
+            <span className="gradient-text">O criativo define quem escala.</span>
           </h2>
-          <div className="text-gray-400 text-base leading-relaxed space-y-5 text-left bg-[#0D1122] border border-purple-500/10 rounded-2xl p-8">
-            <p>
-              Hoje o mercado acredita que performance vem de público, campanha e estrutura. Mas a verdade é que o algoritmo já encontra compradores sozinho. O que realmente define quais ofertas escalam é o criativo.
-            </p>
-            <p>
-              O problema é que ninguém consegue medir isso de verdade. Enquanto o mercado analisa apenas métricas superficiais como CTR, CPC e ROAS, a parte mais importante do anúncio continua invisível: o hook que prende, o corpo que retém, a emoção que gera desejo e o CTA que converte.
-            </p>
-            <p className="text-white font-medium">
-              A Hookify nasceu para resolver exatamente isso. Não somos apenas um tracker. Somos uma plataforma de inteligência criativa que transforma anúncios em dados acionáveis.
-            </p>
-            <p>
-              Porque o futuro do tráfego não está em criar mais campanhas. Está em entender, prever e escalar os criativos certos.
-            </p>
+          <div style={{ background: "linear-gradient(145deg, #0E1120, #0B0E1A)", border: "1px solid rgba(168,85,247,0.12)", borderRadius: 20, padding: "36px 40px", textAlign: "left" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 18, color: "#6B7280", lineHeight: 1.8, fontSize: 15 }}>
+              <p>Hoje o mercado acredita que performance vem de público, campanha e estrutura. Mas a verdade é que o algoritmo já encontra compradores sozinho. O que realmente define quais ofertas escalam é o criativo.</p>
+              <p>O problema é que ninguém consegue medir isso de verdade. Enquanto o mercado analisa apenas métricas superficiais como CTR, CPC e ROAS, a parte mais importante do anúncio continua invisível: o hook que prende, o corpo que retém, a emoção que gera desejo e o CTA que converte.</p>
+              <p style={{ color: "#D8B4FE", fontWeight: 600 }}>A Hookify nasceu para resolver exatamente isso. Não somos apenas um tracker. Somos uma plataforma de inteligência criativa que transforma anúncios em dados acionáveis.</p>
+              <p>Porque o futuro do tráfego não está em criar mais campanhas. Está em entender, prever e escalar os criativos certos.</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section id="features" className="py-24 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="badge inline-flex px-3 py-1 rounded-full text-xs font-medium mb-4">Diferenciais</div>
-            <h2 className="text-3xl sm:text-4xl font-bold">
+      {/* ── Features ── */}
+      <section id="funcionalidades" style={{ padding: "0 24px 96px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 56 }}>
+            <div className="badge" style={{ marginBottom: 16 }}>Diferenciais</div>
+            <h2 className="heading-lg">
               Tudo que você precisa para{" "}
-              <span className="gradient-text-purple">escalar criativos</span>
+              <span className="gradient-text">escalar criativos</span>
             </h2>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {features.map((f) => (
-              <div key={f.title} className="card-feature rounded-2xl p-7">
-                <div className="flex items-start gap-4 mb-5">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(124,58,237,0.12)" }}>
-                    {f.icon}
-                  </div>
-                  <div>
-                    <span className="badge text-xs px-2.5 py-0.5 rounded-full font-medium">{f.tag}</span>
-                    <h3 className="text-xl font-bold mt-1.5">{f.title}</h3>
-                  </div>
-                </div>
-                <p className="text-gray-400 text-sm leading-relaxed mb-5">{f.desc}</p>
-                <div className="flex flex-wrap gap-2">
-                  {f.metrics.map((m) => (
-                    <span key={m} className="text-xs px-3 py-1 rounded-full" style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(168,85,247,0.15)", color: "#C084FC" }}>
-                      {m}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(460px, 1fr))", gap: 20 }}>
+            {features.map(f => <FeatureCard key={f.title} {...f} />)}
           </div>
         </div>
       </section>
 
-      {/* Divider */}
-      <div className="divider mx-8" />
+      {/* ── Divider ── */}
+      <div style={{ margin: "0 32px" }} className="divider" />
 
-      {/* Pricing */}
-      <section id="pricing" className="py-24 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="badge inline-flex px-3 py-1 rounded-full text-xs font-medium mb-4">Planos</div>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Escolha o plano{" "}
-              <span className="gradient-text">certo para sua operação</span>
+      {/* ── Pricing ── */}
+      <section id="planos" style={{ padding: "96px 24px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 56 }}>
+            <div className="badge" style={{ marginBottom: 16 }}>Planos</div>
+            <h2 className="heading-lg" style={{ marginBottom: 12 }}>
+              Escolha o plano certo para{" "}
+              <span className="gradient-text">sua operação</span>
             </h2>
-            <p className="text-gray-400">Cancele quando quiser. Sem contrato.</p>
+            <p style={{ color: "#6B7280", fontSize: 15 }}>Cancele quando quiser. Sem contrato.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {plans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`rounded-2xl p-7 flex flex-col ${plan.featured ? "card-pricing-featured" : "card-pricing"}`}
-              >
-                {plan.badge && (
-                  <div className="inline-flex self-start mb-3">
-                    <span className="text-xs px-3 py-1 rounded-full font-semibold" style={{ background: "linear-gradient(135deg, #7C3AED, #A855F7)", color: "white" }}>
-                      {plan.badge}
-                    </span>
-                  </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 20, maxWidth: 980, margin: "0 auto" }}>
+            {plans.map(p => (
+              <div key={p.name} className={p.pro ? "card-price-pro" : "card-price"} style={{ borderRadius: 20, padding: "32px 28px", display: "flex", flexDirection: "column" }}>
+                {p.badge && (
+                  <span style={{ display: "inline-block", background: "linear-gradient(135deg,#7C3AED,#A855F7)", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.05em", padding: "4px 12px", borderRadius: 100, marginBottom: 14, alignSelf: "flex-start" }}>
+                    {p.badge}
+                  </span>
                 )}
-                <h3 className="text-xl font-bold mb-1">{plan.name}</h3>
-                <p className="text-gray-400 text-sm mb-5 leading-relaxed">{plan.desc}</p>
-                <div className="flex items-end gap-1 mb-7">
-                  <span className="text-4xl font-bold">{plan.price}</span>
-                  <span className="text-gray-400 text-sm mb-1">{plan.period}</span>
+                <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 8 }}>{p.name}</h3>
+                <p style={{ color: "#6B7280", fontSize: 13, lineHeight: 1.6, marginBottom: 24 }}>{p.desc}</p>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 4, marginBottom: 28 }}>
+                  <span style={{ fontSize: 40, fontWeight: 800, letterSpacing: "-0.02em" }}>{p.price}</span>
+                  <span style={{ color: "#6B7280", fontSize: 13 }}>/mês</span>
                 </div>
-                <ul className="space-y-3 mb-8 flex-1">
-                  {plan.features.map((feat) => (
-                    <li key={feat} className="flex items-center gap-2.5 text-sm text-gray-300">
-                      <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="10" fill="rgba(124,58,237,0.2)" />
-                        <path d="M8 12l3 3 5-5" stroke="#A855F7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                      {feat}
+                <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 12, marginBottom: 32, flex: 1 }}>
+                  {p.features.map(f => (
+                    <li key={f} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, color: "#CBD5E1" }}>
+                      <IconCheck />
+                      {f}
                     </li>
                   ))}
                 </ul>
-                <button className={`w-full py-3 rounded-xl font-semibold text-sm transition-all ${plan.featured ? "btn-primary" : "btn-secondary"}`}>
-                  {plan.cta}
+                <button className={p.pro ? "btn-primary" : "btn-outline"} style={{ width: "100%", padding: "13px", borderRadius: 12, fontSize: 14, fontWeight: 600 }}>
+                  {p.cta}
                 </button>
               </div>
             ))}
           </div>
 
-          <p className="text-center text-gray-500 text-sm mt-8">
+          <p style={{ textAlign: "center", color: "#374151", fontSize: 13, marginTop: 28 }}>
             Pagamentos processados com segurança via{" "}
-            <span className="text-purple-400 font-medium">Stripe</span>.
+            <span style={{ color: "#A855F7", fontWeight: 600 }}>Stripe</span>.
             Acesso liberado automaticamente após confirmação.
           </p>
         </div>
       </section>
 
-      {/* CTA Final */}
-      <section className="py-24 px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="rounded-3xl p-12" style={{ background: "linear-gradient(160deg, #13102a 0%, #0D1122 100%)", border: "1px solid rgba(168,85,247,0.25)" }}>
-            <HookifyLogo size="lg" />
-            <h2 className="text-3xl sm:text-4xl font-bold mt-6 mb-4">
-              Comece a escalar seus criativos{" "}
-              <span className="gradient-text-purple">hoje.</span>
-            </h2>
-            <p className="text-gray-400 mb-8">
-              Junte-se às operações que já usam inteligência criativa para vender mais.
-            </p>
-            <button className="btn-primary px-10 py-4 rounded-xl text-base font-semibold">
-              Criar conta grátis
-            </button>
-            <p className="text-gray-500 text-sm mt-4">7 dias grátis · Sem cartão necessário · Cancele quando quiser</p>
+      {/* ── CTA Final ── */}
+      <section style={{ padding: "0 24px 96px" }}>
+        <div style={{ maxWidth: 700, margin: "0 auto" }}>
+          <div style={{ background: "linear-gradient(145deg, #140F2D 0%, #0F0D20 100%)", border: "1px solid rgba(168,85,247,0.3)", borderRadius: 24, padding: "60px 40px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+            <div className="glow-orb" style={{ width: 400, height: 400, background: "radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%)", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <HookifyLogo size="lg" />
+              <h2 className="heading-lg" style={{ margin: "24px 0 12px" }}>
+                Comece a escalar seus criativos{" "}
+                <span className="gradient-text">hoje.</span>
+              </h2>
+              <p style={{ color: "#6B7280", fontSize: 15, marginBottom: 32 }}>
+                Junte-se às operações que já usam inteligência criativa para vender mais.
+              </p>
+              <button className="btn-primary" style={{ padding: "15px 40px", borderRadius: 12, fontSize: 15 }}>
+                Criar conta grátis
+              </button>
+              <p style={{ color: "#374151", fontSize: 13, marginTop: 16 }}>7 dias grátis · Sem cartão · Cancele quando quiser</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-purple-500/10 py-10 px-4">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      {/* ── Footer ── */}
+      <footer style={{ borderTop: "1px solid rgba(168,85,247,0.1)", padding: "32px 24px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 20 }}>
           <HookifyLogo size="sm" />
-          <p className="text-gray-500 text-sm">© 2026 Hookify. Todos os direitos reservados.</p>
-          <div className="flex gap-6 text-sm text-gray-500">
-            <a href="#" className="hover:text-gray-300 transition-colors">Termos</a>
-            <a href="#" className="hover:text-gray-300 transition-colors">Privacidade</a>
-            <a href="#" className="hover:text-gray-300 transition-colors">Contato</a>
+          <p style={{ color: "#374151", fontSize: 13 }}>© 2026 Hookify. Todos os direitos reservados.</p>
+          <div style={{ display: "flex", gap: 24 }}>
+            {["Termos", "Privacidade", "Contato"].map(l => (
+              <a key={l} href="#" style={{ color: "#374151", fontSize: 13, textDecoration: "none", transition: "color .2s" }}
+                onMouseEnter={e => (e.currentTarget.style.color = "#9CA3AF")}
+                onMouseLeave={e => (e.currentTarget.style.color = "#374151")}>{l}</a>
+            ))}
           </div>
         </div>
       </footer>
