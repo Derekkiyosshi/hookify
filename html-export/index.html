@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hookify — Plataforma de Inteligência Criativa</title>
+<meta name="description" content="Você está a um criativo de mudar completamente sua vida. Pare de analisar apenas campanhas. Analise o que realmente vende!" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg:        #07050D;
+    --bg-2:      #0C0A18;
+    --surface:   #110D20;
+    --surface-2: #16112A;
+    --line:      rgba(167,139,250,0.10);
+    --line-2:    rgba(167,139,250,0.18);
+    --line-3:    rgba(167,139,250,0.32);
+    --ink:       #F4F1FA;
+    --ink-2:     #C9C2DC;
+    --mute:      #807794;
+    --mute-2:    #524A66;
+    --dim:       #2F2941;
+    --violet:    #8B5CF6;
+    --violet-2:  #A78BFA;
+    --violet-3:  #6D28D9;
+    --violet-soft: rgba(139,92,246,0.12);
+    --acid:      #B6F569;
+    --radius:    14px;
+    --radius-sm: 10px;
+    --radius-lg: 24px;
+    --sans:      'Geist', system-ui, sans-serif;
+    --serif:     'Instrument Serif', 'Times New Roman', serif;
+    --mono:      'Geist Mono', ui-monospace, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    line-height: 1.5;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+  /* ─── Type ─── */
+  .display {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: clamp(38px, 5.5vw, 80px);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+  }
+  .display em {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--violet-2);
+    letter-spacing: -0.02em;
+  }
+  .h2 {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: clamp(26px, 3.2vw, 48px);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+  }
+  .h2 em {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--violet-2);
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--mute);
+  }
+  .eyebrow .dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--violet-2);
+    margin-right: 8px;
+    vertical-align: middle;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.92)} }
+
+  /* ─── Layout ─── */
+  .container { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
+
+  /* ─── Nav ─── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(7,5,13,0.80);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 600; letter-spacing: -0.02em; }
+  .brand-mark {
+    width: 30px; height: 30px;
+    background: linear-gradient(135deg, #C4B5FD 0%, #8B5CF6 55%, #6D28D9 100%);
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px rgba(139,92,246,.35), 0 8px 24px rgba(139,92,246,.32);
+    position: relative;
+  }
+  .brand-mark::before {
+    content: '';
+    position: absolute; inset: 7px;
+    border-left: 2px solid rgba(255,255,255,.85);
+    border-right: 2px solid rgba(255,255,255,.85);
+    border-radius: 2px;
+    background: radial-gradient(circle at 50% 80%, rgba(7,5,13,1) 0 4px, transparent 4px);
+  }
+  .brand-name em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--violet-2); }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a { font-size: 13.5px; color: var(--mute); transition: color .18s; }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* ─── Buttons ─── */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-size: 14px; font-weight: 500;
+    padding: 11px 20px;
+    border-radius: var(--radius-sm);
+    transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease, background .2s;
+    white-space: nowrap; position: relative; overflow: hidden; isolation: isolate;
+  }
+  .btn::before {
+    content: '';
+    position: absolute; top: 0; left: -120%; width: 60%; height: 100%;
+    background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,.18) 50%, transparent 80%);
+    transform: skewX(-18deg);
+    transition: left .7s cubic-bezier(.2,.8,.2,1);
+    pointer-events: none;
+  }
+  .btn:hover::before { left: 130%; }
+  .btn-arrow { display: inline-block; transition: transform .25s cubic-bezier(.2,.8,.2,1); }
+  .btn:hover .btn-arrow { transform: translateX(4px); }
+
+  .btn-primary { background: var(--ink); color: var(--bg); font-weight: 700; box-shadow: 0 8px 24px rgba(139,92,246,.18); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(139,92,246,.35); }
+
+  .btn-ghost { color: var(--ink-2); border: 1px solid var(--line-2); }
+  .btn-ghost:hover { border-color: var(--line-3); color: var(--ink); background: rgba(167,139,250,.04); transform: translateY(-1px); }
+
+  .btn-violet {
+    background: linear-gradient(180deg, #A78BFA 0%, #7C3AED 100%);
+    color: #fff; font-weight: 700;
+    box-shadow: 0 1px 0 rgba(255,255,255,.25) inset, 0 0 0 1px rgba(167,139,250,.4), 0 14px 32px rgba(124,58,237,.45);
+  }
+  .btn-violet:hover { transform: translateY(-2px); box-shadow: 0 1px 0 rgba(255,255,255,.25) inset, 0 0 0 1px rgba(167,139,250,.6), 0 20px 40px rgba(124,58,237,.6); }
+
+  .btn-lg { padding: 15px 30px; font-size: 15px; }
+  .btn-xl { padding: 18px 40px; font-size: 16px; border-radius: var(--radius); }
+
+  /* ─── Hero ─── */
+  .hero {
+    padding: 130px 0 80px;
+    position: relative; overflow: hidden;
+    text-align: center;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 900px 500px at 50% -10%, rgba(139,92,246,.22), transparent 65%),
+      radial-gradient(ellipse 600px 400px at 10% 40%, rgba(124,58,237,.08), transparent 60%),
+      radial-gradient(ellipse 600px 400px at 90% 40%, rgba(124,58,237,.08), transparent 60%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(167,139,250,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(167,139,250,.04) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 50%, #000 20%, transparent 80%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-eyebrow { display: inline-block; margin-bottom: 32px; }
+  .hero-headline { margin-bottom: 24px; max-width: 800px; margin-left: auto; margin-right: auto; }
+  .hero-sub {
+    font-size: 19px; line-height: 1.55; color: var(--ink-2);
+    max-width: 52ch; margin: 0 auto 40px;
+  }
+  .hero-below-graph {
+    font-family: var(--sans);
+    font-size: clamp(26px, 3vw, 44px);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    max-width: 24ch; margin: 40px auto 0;
+    text-align: center;
+  }
+  .hero-below-graph strong { color: var(--violet-2); font-weight: 700; }
+  .hero-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+  .hero-trust {
+    display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
+    font-size: 12.5px; color: var(--mute); margin-bottom: 72px;
+  }
+  .hero-trust span { display: inline-flex; align-items: center; gap: 6px; }
+  .hero-trust svg { color: var(--violet-2); flex-shrink: 0; }
+
+  /* Chart panel */
+  .panel {
+    background: linear-gradient(180deg, var(--surface) 0%, var(--bg-2) 100%);
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 40px 80px -20px rgba(0,0,0,.7), 0 0 0 1px rgba(167,139,250,.04), inset 0 1px 0 rgba(255,255,255,.04);
+    overflow: hidden;
+    max-width: 760px; margin: 56px auto 0;
+  }
+  .panel-bar {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 18px; border-bottom: 1px solid var(--line);
+    background: rgba(255,255,255,.015);
+  }
+  .traffic { display: flex; gap: 6px; }
+  .traffic span { width: 11px; height: 11px; border-radius: 50%; }
+  .traffic span:nth-child(1){background:#4A2535}
+  .traffic span:nth-child(2){background:#4A3F1F}
+  .traffic span:nth-child(3){background:#1F4A2F}
+  .panel-url { font-family: var(--mono); font-size: 11.5px; color: var(--mute); flex: 1; }
+  .live {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--mono); font-size: 10.5px; color: var(--acid);
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .live::before {
+    content: ''; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--acid); box-shadow: 0 0 8px var(--acid);
+    animation: pulse 1.8s infinite;
+  }
+  .chart-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    padding: 18px 22px 10px; gap: 16px;
+  }
+  .chart-title { font-family: var(--mono); font-size: 10.5px; color: var(--mute); text-transform: uppercase; letter-spacing:.14em; margin-bottom: 4px; }
+  .chart-criativo { font-size: 14px; font-weight: 500; color: var(--ink); }
+  .chart-tabs { display: flex; gap: 4px; }
+  .chart-tab { font-size: 11px; padding: 4px 9px; border-radius: 6px; color: var(--mute); font-weight: 500; }
+  .chart-tab.active { background: rgba(167,139,250,.12); color: var(--violet-2); }
+  .chart-stage {
+    position: relative; margin: 0 22px;
+    border-radius: 10px; overflow: hidden; cursor: crosshair;
+    background: radial-gradient(ellipse at 50% 0%, #1a1430 0%, #07050D 70%);
+    border: 1px solid var(--line);
+  }
+  .chart-stage svg { display: block; width: 100%; height: auto; }
+  .curve-line { stroke-dasharray: 1400; stroke-dashoffset: 1400; filter: drop-shadow(0 0 4px rgba(182,245,105,.35)); }
+  .curve-fill { opacity: 0; }
+  .chart-stage.animate .curve-line { animation: draw-curve 2.2s cubic-bezier(.4,0,.2,1) forwards; }
+  .chart-stage.animate .curve-fill { animation: fade-fill 1.8s ease-out .8s forwards; }
+  @keyframes draw-curve { to { stroke-dashoffset: 0; } }
+  @keyframes fade-fill { to { opacity: 1; } }
+  .scan-line {
+    position: absolute; top: 0; bottom: 0; width: 80px;
+    background: linear-gradient(90deg, transparent, rgba(182,245,105,.12), transparent);
+    left: -80px; pointer-events: none;
+  }
+  .chart-stage.animate .scan-line { animation: scan 2.2s cubic-bezier(.4,0,.2,1) forwards; }
+  @keyframes scan { to { left: 100%; } }
+  .chart-axis-y {
+    position: absolute; top: 0; left: 0; bottom: 20px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    font-family: var(--mono); font-size: 9px; color: var(--mute-2);
+    padding: 4px 0 0 8px; pointer-events: none;
+  }
+  .chart-axis-x { display: flex; justify-content: space-between; padding: 8px 22px 10px; font-family: var(--mono); font-size: 10px; color: var(--mute-2); }
+  .play-marker {
+    position: absolute; top: 0; bottom: 0; width: 1.5px; background: rgba(255,255,255,.35); pointer-events: none;
+  }
+  .play-marker::before {
+    content: ''; position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+    width: 8px; height: 8px; background: var(--acid); border-radius: 50%;
+    box-shadow: 0 0 10px var(--acid);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .play-marker::after {
+    content: 'PITCH'; position: absolute; top: 12px; left: 6px;
+    font-family: var(--mono); font-size: 8.5px; color: var(--mute);
+    letter-spacing: .12em; background: rgba(0,0,0,.7); padding: 2px 5px; border-radius: 3px;
+  }
+  .chart-metrics { display: grid; grid-template-columns: repeat(4,1fr); border-top: 1px solid var(--line); margin-top: 14px; }
+  .metric-cell { padding: 14px 16px; border-right: 1px solid var(--line); }
+  .metric-cell:last-child { border-right: 0; }
+  .metric-num { font-size: 20px; font-weight: 500; letter-spacing: -.02em; color: var(--ink); margin-bottom: 2px; line-height: 1.1; }
+  .metric-num em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--violet-2); }
+  .metric-label { font-family: var(--mono); font-size: 9.5px; color: var(--mute); text-transform: uppercase; letter-spacing: .1em; }
+  .metric-delta { font-family: var(--mono); font-size: 10px; margin-left: 5px; }
+  .metric-delta.up { color: var(--acid); }
+
+  /* ─── Section shared ─── */
+  .section { padding: 110px 0; }
+  .section-alt { background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 100%); }
+  .section-border { border-top: 1px solid var(--line); }
+
+  /* ─── Social proof strip ─── */
+  .proof-strip {
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    padding: 24px 0;
+    background: radial-gradient(ellipse 800px 120px at 50% 50%, rgba(139,92,246,.06), transparent);
+  }
+  .proof-strip-inner { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; justify-content: center; }
+  .proof-avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--surface-2), var(--surface));
+    border: 2px solid var(--line-2);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--violet-2);
+    flex-shrink: 0;
+  }
+  .proof-quote { font-size: 13.5px; color: var(--ink-2); line-height: 1.5; max-width: 300px; }
+  .proof-quote strong { color: var(--ink); }
+  .proof-name { font-family: var(--mono); font-size: 10px; color: var(--mute); text-transform: uppercase; letter-spacing: .1em; margin-top: 6px; }
+  .proof-card { display: flex; gap: 14px; align-items: flex-start; padding: 20px 24px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,255,255,.015); }
+  .proof-stars { color: #FBBF24; font-size: 12px; margin-bottom: 6px; letter-spacing: 2px; }
+
+  /* ─── Feature rows ─── */
+  .feat {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; align-items: stretch;
+    border: 1px solid var(--line); border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, var(--surface) 0%, var(--bg-2) 100%);
+    overflow: hidden; margin-bottom: 24px;
+    min-height: 460px;
+  }
+  .feat.reverse { direction: rtl; }
+  .feat.reverse > * { direction: ltr; }
+  .feat-copy { padding: 56px 52px; display: flex; flex-direction: column; justify-content: center; }
+  .feat-idx { font-family: var(--mono); font-size: 11px; color: var(--violet-2); text-transform: uppercase; letter-spacing: .16em; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+  .feat-idx::before { content: ''; width: 28px; height: 1px; background: var(--violet-2); }
+  .feat-title { font-size: clamp(28px, 2.8vw, 40px); font-weight: 500; line-height: 1.08; letter-spacing: -.02em; margin-bottom: 18px; }
+  .feat-title em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--violet-2); }
+  .feat-desc { font-size: 14.5px; line-height: 1.7; color: var(--ink-2); margin-bottom: 24px; max-width: 44ch; }
+  .feat-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .feat-bullets li { display: flex; gap: 10px; font-size: 13.5px; color: var(--mute); line-height: 1.5; }
+  .feat-bullets li::before { content: '→'; color: var(--violet-2); font-family: var(--mono); flex-shrink: 0; }
+  .feat-visual {
+    display: flex; align-items: center; justify-content: center;
+    padding: 36px 32px;
+    background: radial-gradient(ellipse at center, rgba(139,92,246,.07), transparent 70%);
+    border-left: 1px solid var(--line);
+    position: relative; overflow: hidden;
+  }
+  .feat.reverse .feat-visual { border-left: 0; border-right: 1px solid var(--line); }
+
+  /* ─── Mock: chart ─── */
+  .mock-chart {
+    width: 100%; background: #08060F; border: 1px solid var(--line-2);
+    border-radius: 12px; padding: 16px;
+  }
+  .mock-chart-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .mock-chart-title { font-size: 11px; color: var(--mute); font-family: var(--mono); text-transform: uppercase; letter-spacing: .1em; }
+
+  /* ─── Mock: AI chat ─── */
+  .mock-chat {
+    width: 100%; max-width: 400px;
+    background: var(--bg); border: 1px solid var(--line-2);
+    border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 12px;
+  }
+  .chat-msg { display: flex; gap: 10px; font-size: 13px; line-height: 1.55; }
+  .chat-avatar {
+    width: 28px; height: 28px; border-radius: 8px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 11px; font-weight: 600;
+  }
+  .chat-avatar.ai { background: linear-gradient(135deg, var(--violet-2), var(--violet-3)); color: white; }
+  .chat-avatar.user { background: rgba(167,139,250,.1); color: var(--violet-2); border: 1px solid var(--line-2); }
+  .chat-bubble { flex: 1; color: var(--ink-2); padding-top: 4px; }
+  .chat-bubble strong { color: var(--ink); font-weight: 600; }
+  .chat-bubble em { color: var(--violet-2); font-style: normal; }
+  .chat-tag { display: inline-block; font-family: var(--mono); font-size: 9.5px; padding: 2px 7px; border-radius: 100px; background: rgba(182,245,105,.10); color: var(--acid); margin-right: 6px; text-transform: uppercase; letter-spacing: .06em; }
+  .chat-tag.warn { background: rgba(248,113,113,.10); color: #F87171; }
+  .chat-input { display: flex; gap: 10px; align-items: center; border: 1px solid var(--line-2); border-radius: 10px; padding: 10px 12px; margin-top: 4px; }
+  .chat-input span { font-family: var(--mono); font-size: 11.5px; color: var(--mute-2); flex: 1; }
+  .chat-send { width: 24px; height: 24px; border-radius: 6px; background: var(--violet); color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+
+  /* ─── Mock: Frankstein ─── */
+  .mock-frank { width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; }
+  .frank-stack { display: flex; flex-direction: column; gap: 8px; }
+  .frank-card { background: var(--bg); border: 1px solid var(--line-2); border-radius: 10px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; font-size: 12px; }
+  .frank-card.sel { border-color: var(--violet-2); box-shadow: 0 0 0 1px rgba(167,139,250,.25); }
+  .swatch { width: 30px; height: 30px; border-radius: 6px; flex-shrink: 0; }
+  .swatch.a { background: linear-gradient(135deg, #2a1f15, #4a3525); }
+  .swatch.b { background: linear-gradient(135deg, #1a2030, #2a3550); }
+  .swatch.c { background: linear-gradient(135deg, #2a1525, #4a2540); }
+  .swatch.r { background: linear-gradient(135deg, var(--violet-2), var(--violet-3)); box-shadow: 0 0 18px rgba(139,92,246,.4); }
+  .frank-meta-name { color: var(--ink); font-weight: 500; }
+  .frank-meta-tag { color: var(--mute); font-size: 10.5px; font-family: var(--mono); }
+  .frank-pct { font-family: var(--mono); font-size: 11px; color: var(--acid); margin-left: auto; }
+  .frank-arrow { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--violet-2); font-family: var(--mono); font-size: 9.5px; text-transform: uppercase; letter-spacing: .14em; }
+  .frank-output { background: linear-gradient(180deg, var(--surface-2), var(--bg-2)); border: 1px solid var(--violet-2); border-radius: 12px; padding: 18px 14px; text-align: center; box-shadow: 0 0 0 1px rgba(167,139,250,.15), 0 12px 32px rgba(139,92,246,.18); }
+  .frank-out-label { font-family: var(--mono); font-size: 9.5px; color: var(--violet-2); text-transform: uppercase; letter-spacing: .14em; margin-bottom: 10px; }
+  .frank-out-stat { font-family: var(--serif); font-style: italic; font-size: 36px; color: var(--acid); line-height: 1; margin: 8px 0 4px; }
+  .frank-out-sublabel { font-family: var(--mono); font-size: 9px; color: var(--mute); text-transform: uppercase; letter-spacing: .1em; }
+
+  /* ─── Mock: timeline ─── */
+  .mock-time { width: 100%; background: var(--bg); border: 1px solid var(--line-2); border-radius: 12px; padding: 18px; }
+  .time-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .time-tabs { display: flex; gap: 3px; background: rgba(255,255,255,.02); border: 1px solid var(--line); border-radius: 6px; padding: 2px; }
+  .time-tab { font-family: var(--mono); font-size: 10px; padding: 4px 9px; border-radius: 4px; color: var(--mute); text-transform: uppercase; letter-spacing: .08em; }
+  .time-tab.on { background: var(--violet); color: white; }
+  .time-date { font-family: var(--mono); font-size: 11px; color: var(--mute); }
+
+  /* ─── Features grid ─── */
+  .feat-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px; background: var(--line-2);
+    border: 1px solid var(--line-2); border-radius: var(--radius-lg); overflow: hidden;
+  }
+  .feat-grid-cell {
+    background: var(--bg-2);
+    padding: 24px 28px;
+    display: flex; align-items: center; gap: 14px;
+    transition: background .2s;
+  }
+  .feat-grid-cell:hover { background: var(--surface); }
+  .feat-grid-icon {
+    width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(139,92,246,.1); border: 1px solid var(--line-2);
+  }
+  .feat-grid-name { font-size: 14px; font-weight: 500; color: var(--ink); line-height: 1.3; }
+  .feat-grid-sub { font-size: 12px; color: var(--mute); margin-top: 2px; }
+
+  /* ─── Stat strip ─── */
+  .stat-strip { padding: 100px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: radial-gradient(ellipse 700px 500px at 50% 50%, rgba(139,92,246,.18), transparent); text-align: center; }
+  .stat-big { font-family: var(--sans); font-size: clamp(56px, 8vw, 110px); font-weight: 600; letter-spacing: -.04em; color: var(--ink); line-height: 1; }
+  .stat-big em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--violet-2); }
+  .stat-context { font-size: 16px; color: var(--ink-2); max-width: 38ch; margin: 16px auto 0; line-height: 1.6; }
+
+  /* ─── Awards ─── */
+  .awards-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+  .award-card {
+    border: 1px solid var(--line-2); border-radius: var(--radius);
+    background: linear-gradient(180deg, var(--surface), var(--bg-2));
+    padding: 32px 20px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .award-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at top, rgba(139,92,246,.08), transparent 60%); }
+  .award-img { width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 16px; background: linear-gradient(135deg, var(--surface-2), var(--surface)); border: 2px solid var(--line-2); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-style: italic; font-size: 28px; color: var(--violet-2); position: relative; z-index: 1; }
+  .award-name { font-size: 15px; font-weight: 500; color: var(--ink); position: relative; z-index: 1; margin-bottom: 4px; }
+  .award-result { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--acid); position: relative; z-index: 1; }
+  .award-label { font-family: var(--mono); font-size: 9.5px; color: var(--mute); text-transform: uppercase; letter-spacing: .1em; margin-top: 4px; position: relative; z-index: 1; }
+
+  /* ─── Pricing ─── */
+  .pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; border: 1px solid var(--line-2); border-radius: var(--radius-lg); overflow: hidden; }
+  .plan { padding: 40px 32px; border-right: 1px solid var(--line); display: flex; flex-direction: column; background: linear-gradient(180deg, var(--surface), var(--bg-2)); }
+  .plan:last-child { border-right: 0; }
+  .plan.featured { background: linear-gradient(180deg, #1a1230, #110b22); position: relative; }
+  .plan.featured::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at top, rgba(139,92,246,.14), transparent 60%); pointer-events: none; }
+  .plan-tag { font-family: var(--mono); font-size: 10px; color: var(--violet-2); text-transform: uppercase; letter-spacing: .14em; margin-bottom: 16px; height: 14px; }
+  .plan-name { font-size: 26px; font-weight: 500; letter-spacing: -.02em; margin-bottom: 6px; }
+  .plan-name em { font-family: var(--serif); font-style: italic; color: var(--violet-2); font-weight: 400; }
+  .plan-tagline { font-size: 13px; color: var(--mute); line-height: 1.6; margin-bottom: 28px; min-height: 44px; }
+  .plan-price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; }
+  .plan-price-num { font-size: 48px; font-weight: 500; letter-spacing: -.035em; line-height: 1; }
+  .plan-price-num .cur { font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--mute); margin-right: 2px; vertical-align: top; position: relative; top: 6px; font-weight: 400; }
+  .plan-period { color: var(--mute); font-size: 13px; }
+  .plan-billing { font-size: 11.5px; color: var(--mute-2); margin-bottom: 28px; font-family: var(--mono); }
+  .plan-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; flex: 1; }
+  .plan-features li { display: flex; gap: 10px; font-size: 13.5px; color: var(--ink-2); line-height: 1.5; }
+  .plan-features li::before { content: ''; width: 16px; height: 16px; flex-shrink: 0; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M3.5 8.5L6.5 11.5L12.5 5.5' stroke='%23a78bfa' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>"); background-repeat: no-repeat; background-position: center; margin-top: 3px; }
+  .plan-features li.dim { color: var(--mute-2); }
+  .plan-features li.dim::before { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M4 8h8' stroke='%23524a66' stroke-width='1.5' stroke-linecap='round'/></svg>"); }
+  .plan .btn { width: 100%; }
+
+  /* ─── CTA Final ─── */
+  .cta-final {
+    padding: 120px 0 140px; text-align: center;
+    border-top: 1px solid var(--line); position: relative; overflow: hidden;
+  }
+  .cta-final::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 110% 60% at 50% 0%, rgba(109,40,217,.40) 0%, rgba(139,92,246,.10) 50%, transparent 70%); pointer-events: none; }
+  .cta-final::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 30%, var(--bg) 100%); pointer-events: none; }
+  .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 0; }
+  .faq-item { border-bottom: 1px solid var(--line); text-align: left; }
+  .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 0; font-size: 17px; font-weight: 500; color: var(--ink); cursor: pointer; background: none; border: none; font-family: var(--sans); }
+  .faq-q svg { flex-shrink: 0; transition: transform .25s; color: var(--violet-2); }
+  .faq-item.open .faq-q svg { transform: rotate(45deg); }
+  .faq-a { font-size: 15px; color: var(--mute); line-height: 1.7; max-height: 0; overflow: hidden; transition: max-height .35s ease, padding .25s; }
+  .faq-item.open .faq-a { max-height: 300px; padding-bottom: 20px; }
+
+  /* ─── Footer ─── */
+  .footer { border-top: 1px solid var(--line); padding: 40px 0 36px; }
+  .footer-inner { display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: center; }
+  .footer-meta { font-family: var(--mono); font-size: 11px; color: var(--mute-2); text-transform: uppercase; letter-spacing: .12em; }
+  .footer-links { display: flex; gap: 28px; }
+  .footer-links a { font-family: var(--mono); font-size: 11px; color: var(--mute); text-transform: uppercase; letter-spacing: .12em; transition: color .18s; }
+  .footer-links a:hover { color: var(--ink); }
+
+  /* ─── Reveal animation ─── */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.2,.8,.2,1), transform .8s cubic-bezier(.2,.8,.2,1); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 960px) {
+    .nav-links { display: none; }
+    .feat { grid-template-columns: 1fr !important; direction: ltr !important; min-height: auto; }
+    .feat-copy { padding: 36px 28px 0 !important; }
+    .feat-visual { border-left: 0 !important; border-right: 0 !important; border-top: 1px solid var(--line); padding: 28px; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .plan { border-right: 0; border-bottom: 1px solid var(--line); }
+    .plan:last-child { border-bottom: 0; }
+    .chart-metrics { grid-template-columns: repeat(2,1fr); }
+    .awards-grid { grid-template-columns: repeat(2,1fr); }
+    .feat-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .awards-grid { grid-template-columns: 1fr; }
+    .feat-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── Nav ─── -->
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="brand">
+      <span class="brand-mark"></span>
+      <span class="brand-name">Hook<em>ify</em></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#produto">Produto</a>
+      <a href="#planos">Planos</a>
+      <a href="#historia">Nossa história</a>
+    </nav>
+    <div style="display:flex;gap:10px;">
+      <a href="#" class="btn btn-ghost">Entrar</a>
+      <a href="#planos" class="btn btn-violet">Testar gratuitamente <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</header>
+
+<!-- ─── Hero ─── -->
+<section class="hero">
+  <div class="container hero-inner">
+    <span class="eyebrow hero-eyebrow"><span class="dot"></span>Plataforma de Inteligência Criativa · v1.0</span>
+
+    <h1 class="display hero-headline">
+      Você está a um criativo de<br>
+      <em>mudar completamente</em><br>
+      sua vida.
+    </h1>
+
+    <p class="hero-sub">
+      Pare de analisar apenas campanhas. Analise o que realmente vende.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#planos" class="btn btn-violet btn-xl">Testar gratuitamente <span class="btn-arrow">→</span></a>
+      <a href="#produto" class="btn btn-ghost btn-lg">Ver o produto</a>
+    </div>
+
+    <!-- Chart Panel -->
+    <div class="panel">
+      <div class="panel-bar">
+        <div class="traffic"><span></span><span></span><span></span></div>
+        <div class="panel-url">Gráfico do Criativo</div>
+        <div class="live">Ao vivo</div>
+      </div>
+      <div class="chart-head">
+        <div>
+          <div class="chart-title">Retenção do criativo</div>
+          <div class="chart-criativo">Criativo #15</div>
+        </div>
+        <div class="chart-tabs">
+          <span class="chart-tab active">24 horas</span>
+          <span class="chart-tab">7 dias</span>
+          <span class="chart-tab">30 dias</span>
+        </div>
+      </div>
+      <div class="chart-stage" id="hero-chart">
+        <svg viewBox="0 0 600 220" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="cf" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#B6F569" stop-opacity="0.28"/>
+              <stop offset="100%" stop-color="#B6F569" stop-opacity="0.02"/>
+            </linearGradient>
+            <pattern id="grid" width="60" height="55" patternUnits="userSpaceOnUse">
+              <path d="M 60 0 L 0 0 0 55" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="600" height="220" fill="url(#grid)"/>
+          <path class="curve-fill"
+            d="M 0,6 L 10,28 L 22,50 L 36,70 L 52,88 L 72,104 L 96,118 L 124,130 L 156,140 L 190,148 L 228,154 L 268,158 L 310,161 L 352,164 L 394,167 L 436,172 L 478,180 L 520,190 L 562,200 L 600,210 L 600,220 L 0,220 Z"
+            fill="url(#cf)"/>
+          <path class="curve-line"
+            d="M 0,6 L 10,28 L 22,50 L 36,70 L 52,88 L 72,104 L 96,118 L 124,130 L 156,140 L 190,148 L 228,154 L 268,158 L 310,161 L 352,164 L 394,167 L 436,172 L 478,180 L 520,190 L 562,200 L 600,210"
+            fill="none" stroke="#B6F569" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="268" y1="0" x2="268" y2="220" stroke="rgba(255,255,255,0.16)" stroke-width="1" stroke-dasharray="2 3"/>
+        </svg>
+        <div class="chart-axis-y"><span>100%</span><span>75%</span><span>50%</span><span>25%</span><span>0%</span></div>
+        <div class="play-marker" style="left:44.7%"></div>
+        <div class="scan-line"></div>
+      </div>
+      <div class="chart-axis-x">
+        <span>00:00</span><span>00:08</span><span>00:15</span><span>00:23</span><span>00:30</span>
+      </div>
+      <div class="chart-metrics">
+        <div class="metric-cell">
+          <div class="metric-num" data-target="82" data-suffix="%" data-decimals="0">0%</div>
+          <div class="metric-label">Hook Rate</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-num"><span data-target="24.4" data-suffix="%" data-decimals="1">0%</span><span class="metric-delta up">+3.2</span></div>
+          <div class="metric-label">Audiência do CTA</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-num"><span data-target="247" data-suffix="" data-decimals="0">0</span><span class="metric-delta up">+18%</span></div>
+          <div class="metric-label">Vendas</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-num" data-target="48" data-prefix="R$ " data-suffix="K" data-decimals="0">R$ 0K</div>
+          <div class="metric-label">Faturamento</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="hero-below-graph">
+      Somos a <strong>primeira do mercado</strong><br>com ferramentas exclusivas<br>para aumentar as conversões<br>da sua operação por criativo.
+    </p>
+
+  </div>
+</section>
+
+<!-- ─── Social proof ─── -->
+<div class="proof-strip">
+  <div class="container">
+    <p style="text-align:center;font-family:var(--mono);font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.16em;margin-bottom:24px;">Alguns dos nossos usuários mais escalados</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
+      <div class="proof-card">
+        <div class="proof-avatar">M</div>
+        <div>
+          <div class="proof-stars">★★★★★</div>
+          <div class="proof-quote">"Em 2 semanas já sabia <strong>exatamente onde o meu criativo morria</strong>. Nunca mais chutei."</div>
+          <div class="proof-name">Marcos · Operação NUTRA</div>
+        </div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-avatar">L</div>
+        <div>
+          <div class="proof-stars">★★★★★</div>
+          <div class="proof-quote">"A Fábrica Frankstein <strong>triplicou minha velocidade</strong> de teste. É como ter uma equipe de edição full-time."</div>
+          <div class="proof-name">Lucas · Copywriter · Infoproduto</div>
+        </div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-avatar">A</div>
+        <div>
+          <div class="proof-stars">★★★★★</div>
+          <div class="proof-quote">"A IA identificou uma queda que eu nunca teria visto. <strong>Subi o hook rate de 48% para 79%.</strong>"</div>
+          <div class="proof-name">Amanda · Gestora de tráfego</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Features ─── -->
+<section class="section" id="produto">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:72px;" class="reveal">
+      <h2 class="h2">Chega de feeling. <em>Um ecossistema</em><br>completo de inteligência criativa.</h2>
+    </div>
+
+    <!-- Feature 1: Frankstein -->
+    <div class="feat reveal">
+      <div class="feat-copy">
+        <div class="feat-idx">01 — Exclusivo</div>
+        <h3 class="feat-title">Fábrica de Criativos <em>Frankstein.</em></h3>
+        <p class="feat-desc">Já pensou em conseguir unir o gancho validado do criativo A, o corpo validado do B e o CTA validado do C… <strong style="color:var(--ink);">com apenas um clique?</strong><br><br>Não se preocupe com edição. Nossa fábrica fará tudo de forma automática para você.</p>
+      </div>
+      <div class="feat-visual">
+        <div class="mock-frank">
+          <div class="frank-stack">
+            <div class="frank-card sel">
+              <div class="swatch a"></div>
+              <div><div class="frank-meta-name">Criativo A</div><div class="frank-meta-tag">HOOK · 82%</div></div>
+              <div class="frank-pct">✓</div>
+            </div>
+            <div class="frank-card sel">
+              <div class="swatch b"></div>
+              <div><div class="frank-meta-name">Criativo B</div><div class="frank-meta-tag">BODY · 64%</div></div>
+              <div class="frank-pct">✓</div>
+            </div>
+            <div class="frank-card sel">
+              <div class="swatch c"></div>
+              <div><div class="frank-meta-name">Criativo C</div><div class="frank-meta-tag">CTA · 7,4%</div></div>
+              <div class="frank-pct">✓</div>
+            </div>
+          </div>
+          <div class="frank-arrow">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/><path d="M12 16h8M16 12l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Merge
+          </div>
+          <div class="frank-output">
+            <div class="frank-out-label">+ Novo Criativo</div>
+            <div class="swatch r" style="width:44px;height:44px;border-radius:10px;margin:8px auto;"></div>
+            <div style="font-size:12.5px;font-weight:500;color:var(--ink);margin-bottom:4px;">Frank_ABC_01</div>
+            <div class="frank-out-stat">+47<em style="font-size:20px;">%</em></div>
+            <div class="frank-out-sublabel">Projeção de uplift</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 2: Gráfico -->
+    <div class="feat reverse reveal">
+      <div class="feat-copy" style="padding:56px 52px;">
+        <div class="feat-idx">02 — Core</div>
+        <h3 class="feat-title">Gráfico do <em>Criativo.</em></h3>
+        <p class="feat-desc">Sei que você já viu por aí um gráfico de VSL ou de histórico de faturamento…<br>Mas já se perguntou como o seu criativo de fato desempenha ao longo do dia?<br>Já se perguntou qual é o exato momento em que o seu criativo "morre" ou "não aguenta escala"?<br>Você já se perguntou, qual o exato dia da semana o seu criativo para de desempenhar?<br><br>O nosso gráfico de criativos pode te dar todas essas respostas de uma forma muito mais visual e simples…<br><br>Pare de analisar criativos olhando apenas números!</p>
+        <ul class="feat-bullets">
+          <li>Retenção segundo a segundo, em tempo real</li>
+          <li>Hook Rate, Body Rate, CTA Rate, Retenção ao Pitch… e muito mais</li>
+          <li>Faça testes A/B</li>
+        </ul>
+      </div>
+      <div class="feat-visual" style="border-right:1px solid var(--line);">
+        <div class="mock-chart">
+          <div class="mock-chart-head">
+            <span class="mock-chart-title">VSL_Gancho_V3.mp4</span>
+            <div style="display:flex;gap:4px;">
+              <span style="font-size:10px;padding:3px 8px;border-radius:4px;background:rgba(167,139,250,.15);color:var(--violet-2);font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;">Retenção</span>
+              <span style="font-size:10px;padding:3px 8px;border-radius:4px;color:var(--mute-2);font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;">Países</span>
+            </div>
+          </div>
+          <svg viewBox="0 0 360 120" preserveAspectRatio="none" style="width:100%;height:120px;background:linear-gradient(180deg,#0a0710,#050308);border-radius:8px;">
+            <defs><linearGradient id="cf2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#B6F569" stop-opacity="0.32"/><stop offset="100%" stop-color="#B6F569" stop-opacity="0.02"/></linearGradient></defs>
+            <path d="M 0,5 L 10,20 L 22,38 L 38,54 L 60,70 L 90,84 L 130,94 L 170,100 L 210,104 L 250,108 L 290,113 L 330,118 L 360,121 L 360,120 L 0,120 Z" fill="url(#cf2)"/>
+            <path d="M 0,5 L 10,20 L 22,38 L 38,54 L 60,70 L 90,84 L 130,94 L 170,100 L 210,104 L 250,108 L 290,113 L 330,118 L 360,121" fill="none" stroke="#B6F569" stroke-width="1.5"/>
+            <line x1="165" y1="0" x2="165" y2="120" stroke="rgba(255,255,255,0.18)" stroke-dasharray="2 3"/>
+          </svg>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px;">
+            <div><div style="font-size:15px;font-weight:500;color:var(--ink);">82%</div><div style="font-family:var(--mono);font-size:9px;color:var(--mute);text-transform:uppercase;letter-spacing:.08em;">Hook</div></div>
+            <div><div style="font-size:15px;font-weight:500;color:var(--ink);">52%</div><div style="font-family:var(--mono);font-size:9px;color:var(--mute);text-transform:uppercase;letter-spacing:.08em;">Body</div></div>
+            <div><div style="font-size:15px;font-weight:500;color:var(--violet-2);">24%</div><div style="font-family:var(--mono);font-size:9px;color:var(--mute);text-transform:uppercase;letter-spacing:.08em;">Pitch</div></div>
+            <div><div style="font-size:15px;font-weight:500;color:var(--acid);">3.7%</div><div style="font-family:var(--mono);font-size:9px;color:var(--mute);text-transform:uppercase;letter-spacing:.08em;">CVR</div></div>
+          </div>
+          <div class="chart-metrics" style="margin-top:0;border-top:1px solid var(--line);border-radius:0 0 12px 12px;">
+            <div class="metric-cell">
+              <div class="metric-num">82%</div>
+              <div class="metric-label">Hook Rate</div>
+            </div>
+            <div class="metric-cell">
+              <div class="metric-num"><span>24.4%</span><span class="metric-delta up">+3.2</span></div>
+              <div class="metric-label">Audiência do CTA</div>
+            </div>
+            <div class="metric-cell">
+              <div class="metric-num"><span>247</span><span class="metric-delta up">+18%</span></div>
+              <div class="metric-label">Vendas</div>
+            </div>
+            <div class="metric-cell">
+              <div class="metric-num">R$ 48K</div>
+              <div class="metric-label">Faturamento</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 3: Time Lapse -->
+    <div class="feat reveal">
+      <div class="feat-copy">
+        <div class="feat-idx">03 — Histórico</div>
+        <h3 class="feat-title">Time-Lapse. <em>Volte no tempo</em><br>de qualquer criativo.</h3>
+        <p class="feat-desc">Imagina conseguir entender o exato momento em que o criativo oscilou positivamente ou negativamente durante o período.<br><br>A ferramenta do gráfico em Time Lapse é perfeita para <strong style="color:var(--ink);">entender a sazonalidade de cada criativo.</strong></p>
+      </div>
+      <div class="feat-visual">
+        <div class="mock-time">
+          <div class="time-head">
+            <div class="time-tabs">
+              <span class="time-tab">24h</span>
+              <span class="time-tab on">7 dias</span>
+              <span class="time-tab">30d</span>
+            </div>
+            <div class="time-date">14 – 21 mai</div>
+          </div>
+          <svg viewBox="0 0 360 130" preserveAspectRatio="none" style="width:100%;height:130px;background:linear-gradient(180deg,#0a0710,#050308);border-radius:8px;">
+            <defs><linearGradient id="tlg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#A78BFA" stop-opacity="0.28"/><stop offset="100%" stop-color="#A78BFA" stop-opacity="0.02"/></linearGradient></defs>
+            <path d="M 0,28 L 30,56 L 60,78 L 100,90 L 140,100 L 180,104 L 220,110 L 260,114 L 300,118 L 360,122 L 360,130 L 0,130 Z" fill="url(#tlg)" opacity="0.5"/>
+            <path d="M 0,16 L 30,44 L 60,66 L 100,80 L 140,90 L 180,96 L 220,100 L 260,104 L 300,108 L 360,114" fill="none" stroke="#A78BFA" stroke-width="1.5"/>
+            <path d="M 0,26 L 30,54 L 60,74 L 100,88 L 140,98 L 180,102 L 220,106 L 260,110 L 300,114 L 360,118" fill="none" stroke="#B6F569" stroke-width="1.5" opacity="0.65"/>
+            <path d="M 0,38 L 30,66 L 60,86 L 100,98 L 140,108 L 180,112 L 220,116 L 260,120 L 300,124 L 360,128" fill="none" stroke="#F472B6" stroke-width="1.5" opacity="0.45"/>
+            <line x1="196" y1="0" x2="196" y2="130" stroke="rgba(167,139,250,0.4)" stroke-width="1" stroke-dasharray="2 3"/>
+            <circle cx="196" cy="96" r="3" fill="#A78BFA"/>
+          </svg>
+          <div style="display:flex;justify-content:space-between;margin-top:10px;font-family:var(--mono);font-size:10px;color:var(--mute-2);">
+            <span>seg</span><span>ter</span><span>qua</span><span>qui</span><span>sex</span><span>sáb</span><span>dom</span>
+          </div>
+          <div style="display:flex;gap:14px;margin-top:14px;font-family:var(--mono);font-size:10px;color:var(--mute);text-transform:uppercase;letter-spacing:.08em;">
+            <span style="display:inline-flex;align-items:center;gap:6px;"><span style="width:8px;height:2px;background:#A78BFA;display:inline-block;"></span>sem 21</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;"><span style="width:8px;height:2px;background:#B6F569;display:inline-block;"></span>sem 20</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;"><span style="width:8px;height:2px;background:#F472B6;display:inline-block;"></span>sem 19</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 4: IA -->
+    <div class="feat reverse reveal">
+      <div class="feat-copy" style="padding:56px 52px;">
+        <div class="feat-idx">04 — IA</div>
+        <h3 class="feat-title">Sugestões com <em>IA.</em></h3>
+        <p class="feat-desc">Você terá integração com um chat inteligente e treinado para fazer sugestões de melhorias, responder perguntas técnicas e te ajudar a melhorar o desempenho dos seus criativos.<br><br><strong style="color:var(--ink);">Com insights que nenhuma mentoria te passa.</strong></p>
+      </div>
+      <div class="feat-visual" style="border-right:1px solid var(--line);">
+        <div class="mock-chat">
+          <div class="chat-msg">
+            <div class="chat-avatar user">VP</div>
+            <div class="chat-bubble">Por que o criativo caiu depois do minuto 4?</div>
+          </div>
+          <div class="chat-msg">
+            <div class="chat-avatar ai">H</div>
+            <div class="chat-bubble">
+              <span class="chat-tag warn">Drop · 4:12 → 4:48</span><br>
+              Identifiquei <strong>queda de 18%</strong> exatamente na introdução do preço. O hook prendeu (<em>82%</em>) e o body retém bem (<em>52%</em>), mas o público abandona <strong>antes do pitch terminar</strong>.<br><br>
+              <span class="chat-tag">Sugestão</span>
+              Antecipar o "porquê do preço" ou inserir uma prova social no minuto 3:50 para ancorar a oferta.
+            </div>
+          </div>
+          <div class="chat-input">
+            <span>Pergunte algo sobre esse criativo…</span>
+            <div class="chat-send">↑</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Features Grid "Tudo que você precisa" ─── -->
+<section class="section section-border section-alt">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:56px;" class="reveal">
+      <span class="eyebrow" style="display:inline-block;margin-bottom:20px;"><span class="dot"></span>Diferenciais</span>
+      <h2 class="h2">Tudo que você precisa para ter os criativos<br><em>mais escalados do mercado.</em></h2>
+    </div>
+    <div class="feat-grid reveal">
+      <div class="feat-grid-cell">
+        <div class="feat-grid-icon"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#A78BFA" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4v16"/></svg></div>
+        <div><div class="feat-grid-name">Gráfico de Retenção</div><div class="feat-grid-sub">Segundo a segundo, em tempo real</div></div>
+      </div>
+      <div class="feat-grid-cell">
+        <div class="feat-grid-icon"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#A78BFA" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M5 14.5l-1.5 5.5h17L19 14.5M5 14.5h14.5"/></svg></div>
+        <div><div class="feat-grid-name">Fábrica Frankstein</div><div class="feat-grid-sub">Combine o melhor de cada criativo</div></div>
+      </div>
+      <div class="feat-grid-cell">
+        <div class="feat-grid-icon"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#A78BFA" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg></div>
+        <div><div class="feat-grid-name">IA de Sugestões</div><div class="feat-grid-sub">Chat treinado no seu nicho</div></div>
+      </div>
+      <div class="feat-grid-cell">
+        <div class="feat-grid-icon"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#A78BFA" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <div><div class="feat-grid-name">Time-Lapse</div><div class="feat-grid-sub">24h · 7 dias · 30 dias</div></div>
+      </div>
+      <div class="feat-grid-cell">
+        <div class="feat-grid-icon"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#A78BFA" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5"/></svg></div>
+        <div><div class="feat-grid-name">Teste A/B</div><div class="feat-grid-sub">Compare criativos lado a lado</div></div>
+      </div>
+      <div class="feat-grid-cell">
+        <div class="feat-grid-icon"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#A78BFA" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg></div>
+        <div><div class="feat-grid-name">Notificações personalizadas</div><div class="feat-grid-sub">Saiba na hora que um criativo validou</div></div>
+      </div>
+      <div class="feat-grid-cell">
+        <div class="feat-grid-icon"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#A78BFA" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg></div>
+        <div><div class="feat-grid-name">Integração Meta Ads</div><div class="feat-grid-sub">Conecte suas contas com 1 clique</div></div>
+      </div>
+      <div class="feat-grid-cell">
+        <div class="feat-grid-icon"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#A78BFA" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5"/></svg></div>
+        <div><div class="feat-grid-name">Métricas exclusivas</div><div class="feat-grid-sub">Dados que a Meta Ads não te mostra</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Stat strip ─── -->
+<section class="stat-strip">
+  <div class="container">
+    <div class="reveal">
+      <h2 style="font-family:var(--sans);font-size:clamp(32px,4.5vw,64px);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:var(--ink);max-width:16ch;margin:0 auto;">Clientes da Hookify escalam suas operações <span style="color:var(--violet-2);">83% mais rápido</span> que a média do mercado digital</h2>
+      <p style="font-size:16px;color:var(--mute);margin:20px auto 0;max-width:36ch;">Analise o que realmente vende e escale mais rápido que a concorrência</p>
+      <div style="margin-top:40px;">
+        <a href="#planos" class="btn btn-violet btn-lg">Quero começar <span class="btn-arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Awards / Premiações ─── -->
+<section class="section section-border">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:56px;" class="reveal">
+      <span class="eyebrow" style="display:inline-block;margin-bottom:20px;">A única do mercado que reconhece a escala de cada criativo da sua operação</span>
+      <h2 class="h2">Resultados <em>reais</em> de quem já usa.</h2>
+    </div>
+    <div class="awards-grid reveal">
+      <div class="award-card">
+        <div class="award-img">M</div>
+        <div class="award-name">Marcos · NUTRA</div>
+        <div class="award-result">R$2.8M</div>
+        <div class="award-label">em 90 dias de uso</div>
+      </div>
+      <div class="award-card">
+        <div class="award-img">L</div>
+        <div class="award-name">Lucas · Infoproduto</div>
+        <div class="award-result">+340%</div>
+        <div class="award-label">de hook rate no criativo</div>
+      </div>
+      <div class="award-card">
+        <div class="award-img">A</div>
+        <div class="award-name">Amanda · Tráfego</div>
+        <div class="award-result">R$890K</div>
+        <div class="award-label">escalados em 30 dias</div>
+      </div>
+      <div class="award-card">
+        <div class="award-img">R</div>
+        <div class="award-name">Rafael · Lançamento</div>
+        <div class="award-result">+220%</div>
+        <div class="award-label">de ROAS no creative testing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Pricing ─── -->
+<section class="section section-border" id="planos">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:64px;" class="reveal">
+      <span class="eyebrow" style="display:inline-block;margin-bottom:24px;"><span class="dot"></span>Planos</span>
+      <h2 class="h2" style="margin-bottom:16px;">Um plano para cada <em>estágio</em><br>da sua operação.</h2>
+      <p style="color:var(--mute);font-size:15px;">Cobrança em BRL. Sem fidelidade. Cancele quando quiser.</p>
+    </div>
+    <div class="pricing-grid reveal">
+      <div class="plan">
+        <div class="plan-tag"></div>
+        <div class="plan-name">Starter</div>
+        <p class="plan-tagline">Para copywriters e gestores que estão começando a analisar criativos de forma profissional.</p>
+        <div class="plan-price"><span class="plan-price-num"><span class="cur">R$</span>147</span><span class="plan-period">/mês</span></div>
+        <div class="plan-billing">Cobrado mensalmente</div>
+        <ul class="plan-features">
+          <li>Até 10 criativos ativos</li>
+          <li>Gráfico de retenção em tempo real</li>
+          <li>12 métricas nativas</li>
+          <li>IA de sugestões — 50 análises/mês</li>
+          <li>Time-Lapse 7 dias</li>
+          <li class="dim">Fábrica Frankstein</li>
+          <li class="dim">Múltiplas contas Meta</li>
+        </ul>
+        <a href="#" class="btn btn-ghost">Começar grátis</a>
+      </div>
+      <div class="plan featured">
+        <div class="plan-tag">★ Mais escolhido</div>
+        <div class="plan-name">Pro <em>— recomendado</em></div>
+        <p class="plan-tagline">Para operações que testam criativos em escala e precisam de velocidade para escalar o que vende.</p>
+        <div class="plan-price"><span class="plan-price-num"><span class="cur">R$</span>297</span><span class="plan-period">/mês</span></div>
+        <div class="plan-billing">Cobrado mensalmente</div>
+        <ul class="plan-features">
+          <li>Criativos ilimitados</li>
+          <li>Gráfico de retenção em tempo real</li>
+          <li>Métricas nativas + personalizadas</li>
+          <li>IA de sugestões ilimitada</li>
+          <li>Time-Lapse 30 dias</li>
+          <li>Fábrica Frankstein incluída</li>
+          <li>Comparação lado a lado (até 4 ads)</li>
+        </ul>
+        <a href="#" class="btn btn-violet">Começar 7 dias grátis <span class="btn-arrow">→</span></a>
+      </div>
+      <div class="plan">
+        <div class="plan-tag"></div>
+        <div class="plan-name">Scale</div>
+        <p class="plan-tagline">Para grandes operações de NUTRA, lançamentos e estruturas multi-conta de tráfego direto.</p>
+        <div class="plan-price"><span class="plan-price-num"><span class="cur">R$</span>597</span><span class="plan-period">/mês</span></div>
+        <div class="plan-billing">Cobrado mensalmente</div>
+        <ul class="plan-features">
+          <li>Tudo do Pro</li>
+          <li>Múltiplas contas Meta</li>
+          <li>API de integração</li>
+          <li>Relatórios personalizados</li>
+          <li>Suporte prioritário (WhatsApp)</li>
+          <li>Onboarding 1-on-1 com a equipe</li>
+          <li>SLA dedicado</li>
+        </ul>
+        <a href="#" class="btn btn-ghost">Falar com vendas</a>
+      </div>
+    </div>
+    <p style="text-align:center;font-family:var(--mono);font-size:11px;color:var(--mute-2);text-transform:uppercase;letter-spacing:.1em;margin-top:32px;">Pagamentos processados via Stripe · Acesso liberado automaticamente</p>
+  </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+<section class="cta-final">
+  <div class="container" style="position:relative;z-index:1;">
+    <span class="eyebrow" style="display:inline-block;margin-bottom:20px;"><span class="dot"></span>Dúvidas frequentes</span>
+    <h2 class="h2" style="margin-bottom:56px;">Perguntas <em>frequentes.</em></h2>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q">O que é a Hookify?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a">A Hookify é uma plataforma de inteligência criativa para anúncios no Meta Ads. Ela transforma os dados do seu criativo em informações visuais e acionáveis — você enxerga exatamente onde o criativo prende, onde ele perde o público e quando ele morre.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Precisa ter experiência com tráfego pago?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a">Sim, a Hookify foi feita para gestores de tráfego, copywriters e operações que já rodam anúncios no Meta Ads. Quanto mais criativos você testar, mais valor a plataforma entrega.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Como a integração com o Meta Ads funciona?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a">Você conecta sua conta do Meta Ads com um clique via OAuth. A Hookify puxa automaticamente os dados dos seus criativos pela Meta Marketing API — sem instalar pixel, sem copiar código, sem complicação.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">A Fábrica Frankstein realmente edita o vídeo automaticamente?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a">Sim. A IA identifica os blocos de cada criativo (hook, corpo e CTA), você seleciona as partes que quer combinar e o sistema monta a variação automaticamente — pronta para subir direto na Meta.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Posso cancelar a qualquer momento?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a">Sim. Sem fidelidade, sem multa. Você cancela quando quiser direto pelo painel, sem precisar falar com ninguém.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Os 7 dias grátis precisam de cartão?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a">Sim. Pedimos o cartão no início do teste para garantir a continuidade do acesso. Você não é cobrado durante os 7 dias — a cobrança só acontece automaticamente ao final do período, caso não cancele antes.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── Footer ─── -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <a href="#" class="brand" style="font-size:16px;">
+      <span class="brand-mark" style="width:24px;height:24px;border-radius:6px;"></span>
+      <span class="brand-name">Hook<em>ify</em></span>
+    </a>
+    <div class="footer-meta">© 2026 Hookify · Todos os direitos reservados</div>
+    <div class="footer-links">
+      <a href="/termos.html">Termos</a>
+      <a href="/privacidade.html">Privacidade</a>
+      <a href="/status.html">Status</a>
+      <a href="mailto:contato@hookify.com.br">Contato</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ─── Count-up ─── */
+  function countUp(el) {
+    if (el.dataset.counted) return;
+    el.dataset.counted = '1';
+    const target = parseFloat(el.dataset.target);
+    const decimals = parseInt(el.dataset.decimals || '0');
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const duration = 1400;
+    const start = performance.now();
+    function tick(now) {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = prefix + (target * eased).toFixed(decimals) + suffix;
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  /* ─── Intersection observer ─── */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      if (el.classList.contains('chart-stage')) el.classList.add('animate');
+      else if (el.dataset.target) countUp(el);
+      else if (el.classList.contains('reveal')) el.classList.add('in');
+      io.unobserve(el);
+    });
+  }, { threshold: 0.18 });
+
+  document.querySelectorAll('.chart-stage, [data-target], .reveal').forEach(el => io.observe(el));
+
+  /* ─── Feature rows reveal ─── */
+  document.querySelectorAll('.feat').forEach((row, i) => {
+    if (!row.classList.contains('reveal')) return;
+    row.style.transitionDelay = (i * 0.06) + 's';
+  });
+
+  /* ─── FAQ accordion ─── */
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>
