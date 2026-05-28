@@ -197,12 +197,14 @@ export default function LoginPage() {
 
       {/* ── DIREITA — Form ── */}
       <div style={{
-        width: '480px', flexShrink: 0,
+        flex: '0 0 45%',
         display: 'flex', flexDirection: 'column', justifyContent: 'center',
-        padding: '60px 52px',
+        alignItems: 'center',
+        padding: '60px 40px',
         background: '#060A18',
         borderLeft: '1px solid rgba(255,255,255,0.06)',
       }}>
+        <div style={{ width: '100%', maxWidth: 420 }}>
         <div style={{ marginBottom: 32 }}>
           <h2 style={{ fontSize: 26, fontWeight: 700, color: '#F2F5FA', letterSpacing: '-0.02em', marginBottom: 8 }}>
             Entrar na conta
@@ -321,6 +323,7 @@ export default function LoginPage() {
           {' '}e{' '}
           <Link href="/privacidade" style={{ color: '#4A5560', textDecoration: 'underline' }}>Política de Privacidade</Link>.
         </p>
+        </div>
       </div>
     </div>
   )
