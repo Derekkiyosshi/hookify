@@ -22,7 +22,7 @@ export default async function ContaPage() {
       <div className="bg-[#0D1117] border border-white/6 rounded-2xl p-6 mb-4">
         <h2 className="text-white font-semibold mb-5">Perfil</h2>
         <div className="flex items-center gap-4 mb-6">
-          <div className="w-16 h-16 bg-purple-600/20 border border-purple-500/20 rounded-2xl flex items-center justify-center text-2xl font-bold text-purple-400">
+          <div className="w-16 h-16 bg-cyan-600/20 border border-cyan-500/20 rounded-2xl flex items-center justify-center text-2xl font-bold text-cyan-400">
             {name.charAt(0).toUpperCase()}
           </div>
           <div>
@@ -36,7 +36,7 @@ export default async function ContaPage() {
             <label className="block text-sm text-gray-400 mb-2">Nome completo</label>
             <input
               defaultValue={name}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-purple-500/60"
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-cyan-500/60"
             />
           </div>
           <div>
@@ -47,7 +47,7 @@ export default async function ContaPage() {
               className="w-full bg-white/3 border border-white/6 rounded-xl px-4 py-3 text-gray-500 text-sm cursor-not-allowed"
             />
           </div>
-          <button className="bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-colors">
+          <button className="bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-colors">
             Salvar alterações
           </button>
         </div>
@@ -56,14 +56,14 @@ export default async function ContaPage() {
       {/* Subscription */}
       <div className="bg-[#0D1117] border border-white/6 rounded-2xl p-6 mb-4">
         <h2 className="text-white font-semibold mb-5">Assinatura</h2>
-        <div className="bg-purple-500/10 border border-purple-500/20 rounded-xl p-4 flex items-center justify-between mb-4">
+        <div className="bg-cyan-500/10 border border-cyan-500/20 rounded-xl p-4 flex items-center justify-between mb-4">
           <div>
-            <p className="text-purple-300 font-semibold">Trial Ativo</p>
+            <p className="text-cyan-300 font-semibold">Trial Ativo</p>
             <p className="text-gray-400 text-sm mt-0.5">7 dias grátis · Vence em breve</p>
           </div>
           <Link
             href="/dashboard/planos"
-            className="bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium px-4 py-2 rounded-xl transition-colors"
+            className="bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-medium px-4 py-2 rounded-xl transition-colors"
           >
             Fazer upgrade
           </Link>

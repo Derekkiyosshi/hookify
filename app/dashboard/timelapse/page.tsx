@@ -18,7 +18,7 @@ const dailyData = Array.from({ length: 7 }, (_, i) => ({
   criativo3: 48 + Math.round(Math.sin(i * 1.2) * 5),
 }))
 
-const colors = ['#A855F7', '#3b82f6', '#ef4444']
+const colors = ['#00CFFF', '#3b82f6', '#ef4444']
 
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
@@ -57,7 +57,7 @@ export default function TimelapsePage() {
               onClick={() => setPeriod(p)}
               className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
                 period === p
-                  ? 'bg-purple-600 text-white'
+                  ? 'bg-cyan-600 text-white'
                   : 'bg-white/5 border border-white/10 text-gray-400 hover:text-white'
               }`}
             >
@@ -123,12 +123,12 @@ export default function TimelapsePage() {
       </div>
 
       {/* Pro feature */}
-      <div className="bg-purple-500/5 border border-dashed border-purple-500/30 rounded-2xl p-6 flex items-center justify-between">
+      <div className="bg-cyan-500/5 border border-dashed border-cyan-500/30 rounded-2xl p-6 flex items-center justify-between">
         <div>
           <p className="text-white font-semibold">Time-Lapse de 30 dias — Plano Pro</p>
           <p className="text-gray-400 text-sm mt-1">Veja a evolução completa e identifique sazonalidade</p>
         </div>
-        <a href="/dashboard/planos" className="bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-colors">
+        <a href="/dashboard/planos" className="bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-colors">
           Fazer upgrade
         </a>
       </div>

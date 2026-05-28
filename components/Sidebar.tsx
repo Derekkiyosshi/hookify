@@ -48,15 +48,15 @@ export default function Sidebar({ userName, userEmail, plan = 'trial', trialDays
 
       {/* Trial banner */}
       {plan === 'trial' && (
-        <div className="mx-3 mt-4 bg-purple-500/10 border border-purple-500/20 rounded-xl px-4 py-3">
+        <div className="mx-3 mt-4 bg-cyan-500/10 border border-cyan-500/20 rounded-xl px-4 py-3">
           <div className="flex justify-between items-center mb-1">
-            <span className="text-xs font-semibold text-purple-300 uppercase tracking-wide">Trial</span>
-            <span className="text-xs text-purple-400">{trialDaysLeft}d restantes</span>
+            <span className="text-xs font-semibold text-cyan-300 uppercase tracking-wide">Trial</span>
+            <span className="text-xs text-cyan-400">{trialDaysLeft}d restantes</span>
           </div>
           <div className="h-1 bg-white/10 rounded-full mb-2">
-            <div className="h-full bg-purple-500 rounded-full" style={{ width: `${((7 - trialDaysLeft) / 7) * 100}%` }} />
+            <div className="h-full bg-cyan-500 rounded-full" style={{ width: `${((7 - trialDaysLeft) / 7) * 100}%` }} />
           </div>
-          <Link href="/dashboard/planos" className="text-xs text-purple-400 hover:text-purple-300 transition-colors">
+          <Link href="/dashboard/planos" className="text-xs text-cyan-400 hover:text-cyan-300 transition-colors">
             Assinar agora →
           </Link>
         </div>
@@ -73,20 +73,20 @@ export default function Sidebar({ userName, userEmail, plan = 'trial', trialDays
                   href={item.href}
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all ${
                     isActive(item.href)
-                      ? 'bg-purple-500/15 text-white border border-purple-500/20'
+                      ? 'bg-cyan-500/15 text-white border border-cyan-500/20'
                       : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'
                   }`}
                 >
                   <span className="text-base opacity-60">{item.icon}</span>
                   <span className="text-sm flex-1">{item.label}</span>
-                  <span className="text-[10px] bg-purple-500/20 text-purple-400 px-1.5 py-0.5 rounded-full">Pro</span>
+                  <span className="text-[10px] bg-cyan-500/20 text-cyan-400 px-1.5 py-0.5 rounded-full">Pro</span>
                 </Link>
               ) : (
                 <Link
                   href={item.href}
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all ${
                     isActive(item.href)
-                      ? 'bg-purple-500/15 text-white border border-purple-500/20'
+                      ? 'bg-cyan-500/15 text-white border border-cyan-500/20'
                       : 'text-gray-400 hover:text-white hover:bg-white/5'
                   }`}
                 >
@@ -112,7 +112,7 @@ export default function Sidebar({ userName, userEmail, plan = 'trial', trialDays
           href="/dashboard/conta"
           className="flex items-center gap-3 px-3 py-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all"
         >
-          <div className="w-6 h-6 bg-purple-600/30 rounded-lg flex items-center justify-center text-xs font-bold text-purple-300 flex-shrink-0">
+          <div className="w-6 h-6 bg-cyan-600/30 rounded-lg flex items-center justify-center text-xs font-bold text-cyan-300 flex-shrink-0">
             {userName?.charAt(0).toUpperCase() || 'U'}
           </div>
           <div className="flex-1 min-w-0">

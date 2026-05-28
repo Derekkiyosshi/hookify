@@ -92,7 +92,7 @@ export default function IAPage() {
           <button
             onClick={() => setSelectedCreative(null)}
             className={`w-full text-left px-3 py-2.5 rounded-xl text-sm transition-colors ${
-              !selectedCreative ? 'bg-purple-500/15 text-white border border-purple-500/20' : 'text-gray-400 hover:text-white hover:bg-white/5'
+              !selectedCreative ? 'bg-cyan-500/15 text-white border border-cyan-500/20' : 'text-gray-400 hover:text-white hover:bg-white/5'
             }`}
           >
             🎯 Análise geral
@@ -102,7 +102,7 @@ export default function IAPage() {
               key={c.id}
               onClick={() => setSelectedCreative(c.id)}
               className={`w-full text-left px-3 py-2.5 rounded-xl text-sm transition-colors ${
-                selectedCreative === c.id ? 'bg-purple-500/15 text-white border border-purple-500/20' : 'text-gray-400 hover:text-white hover:bg-white/5'
+                selectedCreative === c.id ? 'bg-cyan-500/15 text-white border border-cyan-500/20' : 'text-gray-400 hover:text-white hover:bg-white/5'
               }`}
             >
               <p className="font-medium truncate">{c.name}</p>
@@ -115,7 +115,7 @@ export default function IAPage() {
             <p className="text-xs text-gray-400">Sugestões restantes (trial)</p>
             <div className="flex items-center gap-2 mt-1.5">
               <div className="flex-1 h-1.5 bg-white/10 rounded-full">
-                <div className="h-full bg-purple-500 rounded-full" style={{ width: `${((maxSuggestions - usedSuggestions) / maxSuggestions) * 100}%` }} />
+                <div className="h-full bg-cyan-500 rounded-full" style={{ width: `${((maxSuggestions - usedSuggestions) / maxSuggestions) * 100}%` }} />
               </div>
               <span className="text-xs text-white font-medium">{maxSuggestions - usedSuggestions}/{maxSuggestions}</span>
             </div>
@@ -130,14 +130,14 @@ export default function IAPage() {
           {messages.map((msg, i) => (
             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               {msg.role === 'assistant' && (
-                <div className="w-8 h-8 bg-purple-600 rounded-xl flex items-center justify-center text-sm flex-shrink-0 mr-3 mt-0.5">
+                <div className="w-8 h-8 bg-cyan-600 rounded-xl flex items-center justify-center text-sm flex-shrink-0 mr-3 mt-0.5">
                   🤖
                 </div>
               )}
               <div
                 className={`max-w-2xl rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-line ${
                   msg.role === 'user'
-                    ? 'bg-purple-600 text-white rounded-br-sm'
+                    ? 'bg-cyan-600 text-white rounded-br-sm'
                     : 'bg-[#0D1117] border border-white/8 text-gray-200 rounded-bl-sm'
                 }`}
               >
@@ -147,11 +147,11 @@ export default function IAPage() {
           ))}
           {loading && (
             <div className="flex justify-start">
-              <div className="w-8 h-8 bg-purple-600 rounded-xl flex items-center justify-center text-sm flex-shrink-0 mr-3">🤖</div>
+              <div className="w-8 h-8 bg-cyan-600 rounded-xl flex items-center justify-center text-sm flex-shrink-0 mr-3">🤖</div>
               <div className="bg-[#0D1117] border border-white/8 rounded-2xl rounded-bl-sm px-4 py-3">
                 <div className="flex gap-1">
                   {[0, 1, 2].map(i => (
-                    <div key={i} className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />
+                    <div key={i} className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />
                   ))}
                 </div>
               </div>
@@ -176,9 +176,9 @@ export default function IAPage() {
 
         {/* Trial limit */}
         {usedSuggestions >= maxSuggestions && (
-          <div className="mx-6 mb-3 bg-purple-500/10 border border-purple-500/20 rounded-xl p-3 flex items-center justify-between">
+          <div className="mx-6 mb-3 bg-cyan-500/10 border border-cyan-500/20 rounded-xl p-3 flex items-center justify-between">
             <p className="text-sm text-white">Limite do trial atingido</p>
-            <Link href="/dashboard/planos" className="text-xs bg-purple-600 hover:bg-purple-500 text-white px-3 py-1.5 rounded-lg transition-colors">
+            <Link href="/dashboard/planos" className="text-xs bg-cyan-600 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-lg transition-colors">
               Fazer upgrade
             </Link>
           </div>
@@ -193,12 +193,12 @@ export default function IAPage() {
               onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage(input)}
               placeholder={usedSuggestions >= maxSuggestions ? 'Limite atingido — faça upgrade' : 'Pergunte sobre seus criativos...'}
               disabled={usedSuggestions >= maxSuggestions}
-              className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-purple-500/60 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-cyan-500/60 disabled:opacity-40 disabled:cursor-not-allowed"
             />
             <button
               onClick={() => sendMessage(input)}
               disabled={!input.trim() || loading || usedSuggestions >= maxSuggestions}
-              className="bg-purple-600 hover:bg-purple-500 disabled:opacity-40 disabled:cursor-not-allowed text-white px-4 py-3 rounded-xl transition-colors"
+              className="bg-cyan-600 hover:bg-cyan-500 disabled:opacity-40 disabled:cursor-not-allowed text-white px-4 py-3 rounded-xl transition-colors"
             >
               →
             </button>

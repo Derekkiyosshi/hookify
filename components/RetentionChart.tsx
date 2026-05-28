@@ -41,7 +41,7 @@ export default function RetentionChart({
           Hook
         </div>
         <div className="flex-1 text-center">Body</div>
-        <div style={{ width: `${((data.length - ctaStart) / (data.length || 60)) * 100}%` }} className="text-center text-purple-400/70">
+        <div style={{ width: `${((data.length - ctaStart) / (data.length || 60)) * 100}%` }} className="text-center text-cyan-400/70">
           CTA
         </div>
       </div>
@@ -50,8 +50,8 @@ export default function RetentionChart({
         <AreaChart data={data} margin={{ top: 24, right: 16, left: -20, bottom: 0 }}>
           <defs>
             <linearGradient id="retentionGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#A855F7" stopOpacity={0.3} />
-              <stop offset="95%" stopColor="#A855F7" stopOpacity={0.02} />
+              <stop offset="5%" stopColor="#00CFFF" stopOpacity={0.3} />
+              <stop offset="95%" stopColor="#00CFFF" stopOpacity={0.02} />
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" stroke="#ffffff08" vertical={false} />
@@ -69,17 +69,17 @@ export default function RetentionChart({
             domain={[0, 100]}
             tickFormatter={v => `${v}%`}
           />
-          <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#A855F7', strokeWidth: 1, strokeDasharray: '4 4' }} />
+          <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#00CFFF', strokeWidth: 1, strokeDasharray: '4 4' }} />
           <ReferenceLine x={hookEnd} stroke="#22c55e" strokeDasharray="4 4" strokeOpacity={0.4} />
-          <ReferenceLine x={ctaStart} stroke="#A855F7" strokeDasharray="4 4" strokeOpacity={0.4} />
+          <ReferenceLine x={ctaStart} stroke="#00CFFF" strokeDasharray="4 4" strokeOpacity={0.4} />
           <Area
             type="monotone"
             dataKey="retention"
-            stroke="#A855F7"
+            stroke="#00CFFF"
             strokeWidth={2}
             fill="url(#retentionGradient)"
             dot={false}
-            activeDot={{ r: 4, fill: '#A855F7', stroke: '#ffffff', strokeWidth: 2 }}
+            activeDot={{ r: 4, fill: '#00CFFF', stroke: '#ffffff', strokeWidth: 2 }}
           />
         </AreaChart>
       </ResponsiveContainer>

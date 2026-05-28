@@ -75,13 +75,13 @@ export default function PlanosPage() {
             key={plan.name}
             className={`relative rounded-2xl p-6 flex flex-col ${
               plan.highlight
-                ? 'bg-purple-600/10 border-2 border-purple-500/50'
+                ? 'bg-cyan-600/10 border-2 border-cyan-500/50'
                 : 'bg-[#0D1117] border border-white/8'
             }`}
           >
             {plan.badge && (
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                <span className="bg-purple-600 text-white text-xs font-semibold px-4 py-1 rounded-full">
+                <span className="bg-cyan-600 text-white text-xs font-semibold px-4 py-1 rounded-full">
                   {plan.badge}
                 </span>
               </div>
@@ -114,7 +114,7 @@ export default function PlanosPage() {
             <button
               className={`w-full py-3 rounded-xl font-semibold text-sm transition-colors ${
                 plan.highlight
-                  ? 'bg-purple-600 hover:bg-purple-500 text-white'
+                  ? 'bg-cyan-600 hover:bg-cyan-500 text-white'
                   : 'bg-white/8 hover:bg-white/12 text-white border border-white/10'
               }`}
             >
@@ -126,7 +126,7 @@ export default function PlanosPage() {
 
       <p className="text-center text-gray-500 text-sm mt-8">
         Tem dúvidas?{' '}
-        <Link href="https://wa.me/5511999999999" className="text-purple-400 hover:text-purple-300 transition-colors">
+        <Link href="https://wa.me/5511999999999" className="text-cyan-400 hover:text-cyan-300 transition-colors">
           Fale com a gente no WhatsApp
         </Link>
       </p>

@@ -12,8 +12,8 @@ function HookifyLogo({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
       <svg width={d} height={d} viewBox="0 0 100 100" fill="none">
         <defs>
           <linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#C084FC" />
-            <stop offset="100%" stopColor="#7C3AED" />
+            <stop offset="0%" stopColor="#60EEFF" />
+            <stop offset="100%" stopColor="#0090CC" />
           </linearGradient>
         </defs>
         <rect x="8" y="8" width="30" height="68" rx="8" fill="url(#lg1)" />
@@ -41,7 +41,7 @@ function RetentionGraph() {
   }, []);
 
   const metrics = [
-    { label: "Visualizações", value: "12.4K", color: "#A78BFA" },
+    { label: "Visualizações", value: "12.4K", color: "#00E5FF" },
     { label: "Hook Rate", value: "82%", color: "#34D399" },
     { label: "Body Rate", value: "52%", color: "#60A5FA" },
     { label: "CTA Rate", value: "32%", color: "#F472B6" },
@@ -54,16 +54,16 @@ function RetentionGraph() {
       ref={ref}
       style={{
         background: "#0A0D1A",
-        border: "1px solid rgba(168,85,247,0.22)",
+        border: "1px solid rgba(0,207,255,0.22)",
         borderRadius: 20,
-        boxShadow: "0 40px 80px rgba(124,58,237,0.15), 0 0 0 1px rgba(168,85,247,0.06)",
+        boxShadow: "0 40px 80px rgba(0,170,200,0.15), 0 0 0 1px rgba(0,207,255,0.06)",
         overflow: "hidden",
       }}
     >
       {/* ── Titlebar ── */}
       <div style={{
         background: "#060912",
-        borderBottom: "1px solid rgba(168,85,247,0.1)",
+        borderBottom: "1px solid rgba(0,207,255,0.1)",
         padding: "14px 20px",
         display: "flex",
         alignItems: "center",
@@ -106,10 +106,10 @@ function RetentionGraph() {
               paddingBottom: 12,
               fontSize: 12,
               fontWeight: i === 0 ? 600 : 400,
-              color: i === 0 ? "#A855F7" : "#4B5563",
+              color: i === 0 ? "#00CFFF" : "#4B5563",
               background: "none",
               border: "none",
-              borderBottom: i === 0 ? "2px solid #A855F7" : "2px solid transparent",
+              borderBottom: i === 0 ? "2px solid #00CFFF" : "2px solid transparent",
               cursor: "pointer",
               transition: "color .2s",
             }}>
@@ -155,7 +155,7 @@ function RetentionGraph() {
                   flex: 1,
                   borderRadius: "3px 3px 0 0",
                   height: show ? `${h}%` : "0%",
-                  background: `linear-gradient(180deg, rgba(168,85,247,${0.55 + h / 280}) 0%, rgba(124,58,237,0.28) 100%)`,
+                  background: `linear-gradient(180deg, rgba(0,207,255,${0.55 + h / 280}) 0%, rgba(0,170,200,0.28) 100%)`,
                   transition: `height ${620 + i * 38}ms cubic-bezier(0.34,1.4,0.64,1)`,
                 }}
               />
@@ -202,7 +202,7 @@ function FeatureCard({ icon, tag, title, desc, chips }: { icon: React.ReactNode;
     <div className="card-feature rounded-2xl" style={{ padding: "28px 28px 24px" }}>
       {/* Icon + tag + title */}
       <div style={{ display: "flex", alignItems: "flex-start", gap: 20, marginBottom: 18 }}>
-        <div style={{ width: 52, height: 52, minWidth: 52, borderRadius: 14, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(124,58,237,0.15)", border: "1px solid rgba(168,85,247,0.22)" }}>
+        <div style={{ width: 52, height: 52, minWidth: 52, borderRadius: 14, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,170,200,0.15)", border: "1px solid rgba(0,207,255,0.22)" }}>
           {icon}
         </div>
         <div style={{ paddingTop: 2 }}>
@@ -213,7 +213,7 @@ function FeatureCard({ icon, tag, title, desc, chips }: { icon: React.ReactNode;
       <p style={{ fontSize: 13.5, lineHeight: 1.75, color: "#94A3B8", marginBottom: 18 }}>{desc}</p>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
         {chips.map(c => (
-          <span key={c} style={{ fontSize: 11.5, padding: "4px 11px", borderRadius: 100, background: "rgba(124,58,237,0.08)", border: "1px solid rgba(168,85,247,0.14)", color: "#A78BFA" }}>{c}</span>
+          <span key={c} style={{ fontSize: 11.5, padding: "4px 11px", borderRadius: 100, background: "rgba(0,170,200,0.08)", border: "1px solid rgba(0,207,255,0.14)", color: "#00E5FF" }}>{c}</span>
         ))}
       </div>
     </div>
@@ -222,29 +222,29 @@ function FeatureCard({ icon, tag, title, desc, chips }: { icon: React.ReactNode;
 
 /* ─── Icons ─── */
 const IconGraph = () => (
-  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#A855F7" strokeWidth={1.8}>
+  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#00CFFF" strokeWidth={1.8}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4v16" />
   </svg>
 );
 const IconAI = () => (
-  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#A855F7" strokeWidth={1.8}>
+  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#00CFFF" strokeWidth={1.8}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
   </svg>
 );
 const IconLab = () => (
-  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#A855F7" strokeWidth={1.8}>
+  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#00CFFF" strokeWidth={1.8}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M5 14.5l-1.5 5.5h17L19 14.5M5 14.5h14.5" />
   </svg>
 );
 const IconClock = () => (
-  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#A855F7" strokeWidth={1.8}>
+  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#00CFFF" strokeWidth={1.8}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
   </svg>
 );
 const IconCheck = () => (
   <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 20 20">
-    <circle cx="10" cy="10" r="9" fill="rgba(124,58,237,0.18)" />
-    <path d="M6.5 10l2.5 2.5 4.5-4.5" stroke="#A855F7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <circle cx="10" cy="10" r="9" fill="rgba(0,170,200,0.18)" />
+    <path d="M6.5 10l2.5 2.5 4.5-4.5" stroke="#00CFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -282,7 +282,7 @@ export default function Page() {
     <div style={{ background: "#07090F", fontFamily: "'Inter', system-ui, sans-serif", minHeight: "100vh" }}>
 
       {/* ── Navbar ── */}
-      <header style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "rgba(7,9,15,0.8)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(168,85,247,0.1)" }}>
+      <header style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "rgba(7,9,15,0.8)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(0,207,255,0.1)" }}>
         <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 40px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <HookifyLogo size="md" />
           <nav style={{ display: "flex", gap: 32, alignItems: "center" }} className="hidden md:flex">
@@ -301,7 +301,7 @@ export default function Page() {
           </div>
         </div>
         {open && (
-          <div style={{ padding: "12px 24px 20px", borderTop: "1px solid rgba(168,85,247,0.1)", display: "flex", flexDirection: "column", gap: 12 }}>
+          <div style={{ padding: "12px 24px 20px", borderTop: "1px solid rgba(0,207,255,0.1)", display: "flex", flexDirection: "column", gap: 12 }}>
             {["Funcionalidades", "Planos", "Sobre"].map(n => (
               <a key={n} href={`#${n.toLowerCase()}`} onClick={() => setOpen(false)} style={{ color: "#9CA3AF", fontSize: 15, textDecoration: "none" }}>{n}</a>
             ))}
@@ -313,15 +313,15 @@ export default function Page() {
       {/* ── Hero ── */}
       <section style={{ paddingTop: 120, paddingBottom: 80, position: "relative", overflow: "hidden" }}>
         {/* Background mesh */}
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(0,170,200,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,170,200,0.04) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none" }} />
         {/* Orbs */}
-        <div className="glow-orb" style={{ width: 700, height: 700, background: "radial-gradient(circle, rgba(124,58,237,0.14) 0%, transparent 70%)", top: -250, left: "50%", transform: "translateX(-50%)" }} />
-        <div className="glow-orb" style={{ width: 350, height: 350, background: "radial-gradient(circle, rgba(168,85,247,0.07) 0%, transparent 70%)", top: "20%", left: "-5%" }} />
-        <div className="glow-orb" style={{ width: 350, height: 350, background: "radial-gradient(circle, rgba(168,85,247,0.07) 0%, transparent 70%)", top: "20%", right: "-5%" }} />
+        <div className="glow-orb" style={{ width: 700, height: 700, background: "radial-gradient(circle, rgba(0,170,200,0.14) 0%, transparent 70%)", top: -250, left: "50%", transform: "translateX(-50%)" }} />
+        <div className="glow-orb" style={{ width: 350, height: 350, background: "radial-gradient(circle, rgba(0,207,255,0.07) 0%, transparent 70%)", top: "20%", left: "-5%" }} />
+        <div className="glow-orb" style={{ width: 350, height: 350, background: "radial-gradient(circle, rgba(0,207,255,0.07) 0%, transparent 70%)", top: "20%", right: "-5%" }} />
 
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 40px", textAlign: "center", position: "relative", zIndex: 1 }}>
           <div className="badge" style={{ marginBottom: 24 }}>
-            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#A855F7", animation: "pulse 2s infinite" }} />
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#00CFFF", animation: "pulse 2s infinite" }} />
             Plataforma de Inteligência Criativa
           </div>
 
@@ -354,8 +354,8 @@ export default function Page() {
 
       {/* ── Problem ── */}
       <section id="sobre" style={{ padding: "96px 40px", position: "relative" }}>
-        <div className="glow-orb" style={{ width: 500, height: 500, background: "radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%)", top: "50%", left: "-8%", transform: "translateY(-50%)" }} />
-        <div className="glow-orb" style={{ width: 500, height: 500, background: "radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%)", top: "50%", right: "-8%", transform: "translateY(-50%)" }} />
+        <div className="glow-orb" style={{ width: 500, height: 500, background: "radial-gradient(circle, rgba(0,170,200,0.07) 0%, transparent 70%)", top: "50%", left: "-8%", transform: "translateY(-50%)" }} />
+        <div className="glow-orb" style={{ width: 500, height: 500, background: "radial-gradient(circle, rgba(0,170,200,0.07) 0%, transparent 70%)", top: "50%", right: "-8%", transform: "translateY(-50%)" }} />
         <div style={{ maxWidth: 1300, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 1 }}>
           <div className="badge" style={{ marginBottom: 20 }}>O problema</div>
           <h2 className="heading-lg" style={{ marginBottom: 16 }}>
@@ -385,7 +385,7 @@ export default function Page() {
                 emoji: "🛠️",
               },
             ].map(card => (
-              <div key={card.q} style={{ background: "linear-gradient(145deg, #0E1120, #0B0E1A)", border: "1px solid rgba(168,85,247,0.12)", borderRadius: 18, padding: "28px 24px", textAlign: "left" }}>
+              <div key={card.q} style={{ background: "linear-gradient(145deg, #0E1120, #0B0E1A)", border: "1px solid rgba(0,207,255,0.12)", borderRadius: 18, padding: "28px 24px", textAlign: "left" }}>
                 <div style={{ fontSize: 28, marginBottom: 14 }}>{card.emoji}</div>
                 <p style={{ fontSize: 15, fontWeight: 700, color: "#E2E8F0", marginBottom: 12, lineHeight: 1.4 }}>"{card.q}"</p>
                 <p style={{ fontSize: 13, color: "#6B7280", lineHeight: 1.7 }}>{card.a}</p>
@@ -394,8 +394,8 @@ export default function Page() {
           </div>
 
           {/* Solution statement */}
-          <div style={{ background: "linear-gradient(135deg, rgba(124,58,237,0.12) 0%, rgba(168,85,247,0.06) 100%)", border: "1px solid rgba(168,85,247,0.25)", borderRadius: 16, padding: "24px 32px", display: "inline-block", maxWidth: 700 }}>
-            <p style={{ fontSize: 15, color: "#D8B4FE", fontWeight: 600, lineHeight: 1.7 }}>
+          <div style={{ background: "linear-gradient(135deg, rgba(0,170,200,0.12) 0%, rgba(0,207,255,0.06) 100%)", border: "1px solid rgba(0,207,255,0.25)", borderRadius: 16, padding: "24px 32px", display: "inline-block", maxWidth: 700 }}>
+            <p style={{ fontSize: 15, color: "#80F0FF", fontWeight: 600, lineHeight: 1.7 }}>
               A Hookify transforma essas perguntas em respostas. Não somos apenas um tracker —
               somos uma plataforma de inteligência criativa que revela{" "}
               <span style={{ color: "#fff" }}>por que determinados criativos vendem e outros não.</span>
@@ -425,7 +425,7 @@ export default function Page() {
 
       {/* ── Pricing ── */}
       <section id="planos" style={{ padding: "96px 40px", position: "relative" }}>
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(124,58,237,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.03) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(0,170,200,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,170,200,0.03) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none" }} />
         <div style={{ maxWidth: 1400, margin: "0 auto", position: "relative", zIndex: 1 }}>
           <div style={{ textAlign: "center", marginBottom: 56 }}>
             <div className="badge" style={{ marginBottom: 16 }}>Planos</div>
@@ -440,7 +440,7 @@ export default function Page() {
             {plans.map(p => (
               <div key={p.name} className={p.pro ? "card-price-pro" : "card-price"} style={{ borderRadius: 20, padding: "32px 28px", display: "flex", flexDirection: "column" }}>
                 {p.badge && (
-                  <span style={{ display: "inline-block", background: "linear-gradient(135deg,#7C3AED,#A855F7)", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.05em", padding: "4px 12px", borderRadius: 100, marginBottom: 14, alignSelf: "flex-start" }}>
+                  <span style={{ display: "inline-block", background: "linear-gradient(135deg,#0090CC,#00CFFF)", color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: "0.05em", padding: "4px 12px", borderRadius: 100, marginBottom: 14, alignSelf: "flex-start" }}>
                     {p.badge}
                   </span>
                 )}
@@ -467,7 +467,7 @@ export default function Page() {
 
           <p style={{ textAlign: "center", color: "#374151", fontSize: 13, marginTop: 28 }}>
             Pagamentos processados com segurança via{" "}
-            <span style={{ color: "#A855F7", fontWeight: 600 }}>Stripe</span>.
+            <span style={{ color: "#00CFFF", fontWeight: 600 }}>Stripe</span>.
             Acesso liberado automaticamente após confirmação.
           </p>
         </div>
@@ -476,8 +476,8 @@ export default function Page() {
       {/* ── CTA Final ── */}
       <section style={{ padding: "0 40px 96px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <div style={{ background: "linear-gradient(145deg, #140F2D 0%, #0F0D20 100%)", border: "1px solid rgba(168,85,247,0.3)", borderRadius: 24, padding: "60px 40px", textAlign: "center", position: "relative", overflow: "hidden" }}>
-            <div className="glow-orb" style={{ width: 400, height: 400, background: "radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%)", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
+          <div style={{ background: "linear-gradient(145deg, #140F2D 0%, #0F0D20 100%)", border: "1px solid rgba(0,207,255,0.3)", borderRadius: 24, padding: "60px 40px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+            <div className="glow-orb" style={{ width: 400, height: 400, background: "radial-gradient(circle, rgba(0,170,200,0.15) 0%, transparent 70%)", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
             <div style={{ position: "relative", zIndex: 1 }}>
               <HookifyLogo size="lg" />
               <h2 className="heading-lg" style={{ margin: "24px 0 12px" }}>
@@ -497,7 +497,7 @@ export default function Page() {
       </section>
 
       {/* ── Footer ── */}
-      <footer style={{ borderTop: "1px solid rgba(168,85,247,0.1)", padding: "32px 40px" }}>
+      <footer style={{ borderTop: "1px solid rgba(0,207,255,0.1)", padding: "32px 40px" }}>
         <div style={{ maxWidth: 1440, margin: "0 auto", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 20 }}>
           <HookifyLogo size="sm" />
           <p style={{ color: "#374151", fontSize: 13 }}>© 2026 Hookify. Todos os direitos reservados.</p>

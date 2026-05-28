@@ -21,7 +21,7 @@ function ScoreRing({ score }: { score: number }) {
 }
 
 function MetricBar({ label, value }: { label: string; value: number }) {
-  const color = value >= 70 ? 'bg-green-400' : value >= 50 ? 'bg-purple-500' : 'bg-red-400'
+  const color = value >= 70 ? 'bg-green-400' : value >= 50 ? 'bg-cyan-500' : 'bg-red-400'
   return (
     <div className="flex-1">
       <div className="flex justify-between text-xs mb-1.5">
@@ -45,7 +45,7 @@ export default function CriativosPage() {
           <h1 className="text-2xl font-bold text-white">Criativos</h1>
           <p className="text-gray-400 text-sm mt-1">{mockCreatives.length} criativos analisados · {total.views.toLocaleString('pt-BR')} views · {total.sales} vendas</p>
         </div>
-        <button className="bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-colors flex items-center gap-2">
+        <button className="bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-colors flex items-center gap-2">
           <span>+</span> Adicionar criativo
         </button>
       </div>
@@ -57,7 +57,7 @@ export default function CriativosPage() {
             key={f}
             className={`px-4 py-1.5 rounded-xl text-sm transition-colors ${
               f === 'Todos'
-                ? 'bg-purple-600 text-white'
+                ? 'bg-cyan-600 text-white'
                 : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 border border-white/8'
             }`}
           >
@@ -79,7 +79,7 @@ export default function CriativosPage() {
           const status = statusConfig[creative.status]
           return (
             <Link key={creative.id} href={`/dashboard/criativos/${creative.id}`}>
-              <div className="bg-[#0D1117] border border-white/6 rounded-2xl p-6 hover:border-purple-500/30 hover:bg-[#0D1117] transition-all cursor-pointer group">
+              <div className="bg-[#0D1117] border border-white/6 rounded-2xl p-6 hover:border-cyan-500/30 hover:bg-[#0D1117] transition-all cursor-pointer group">
                 <div className="flex items-center gap-5">
                   {/* Thumbnail */}
                   <div className="w-32 h-20 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0 border border-white/8 relative overflow-hidden">
@@ -95,7 +95,7 @@ export default function CriativosPage() {
                   {/* Info */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-3 mb-3">
-                      <h3 className="text-white font-semibold truncate group-hover:text-purple-300 transition-colors">
+                      <h3 className="text-white font-semibold truncate group-hover:text-cyan-300 transition-colors">
                         {creative.name}
                       </h3>
                       <span className={`text-xs font-medium px-2.5 py-1 rounded-full border flex-shrink-0 ${status.bg} ${status.color}`}>
@@ -116,7 +116,7 @@ export default function CriativosPage() {
                     <p className="text-xs text-gray-600">{creative.views.toLocaleString('pt-BR')} views</p>
                   </div>
 
-                  <span className="text-gray-600 group-hover:text-purple-400 transition-colors ml-2">→</span>
+                  <span className="text-gray-600 group-hover:text-cyan-400 transition-colors ml-2">→</span>
                 </div>
               </div>
             </Link>
@@ -125,12 +125,12 @@ export default function CriativosPage() {
       </div>
 
       {/* Trial notice */}
-      <div className="mt-8 bg-purple-500/5 border border-purple-500/20 rounded-2xl p-5 flex items-center justify-between">
+      <div className="mt-8 bg-cyan-500/5 border border-cyan-500/20 rounded-2xl p-5 flex items-center justify-between">
         <div>
           <p className="text-white text-sm font-medium">Você está no trial — máx. 3 criativos</p>
           <p className="text-gray-400 text-xs mt-1">Faça upgrade para criativos ilimitados</p>
         </div>
-        <Link href="/dashboard/planos" className="bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-colors">
+        <Link href="/dashboard/planos" className="bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-colors">
           Ver planos
         </Link>
       </div>

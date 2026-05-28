@@ -3,15 +3,15 @@ import Link from 'next/link'
 import RetentionChart from '@/components/RetentionChart'
 import { mockCreatives, statusConfig } from '@/lib/mockData'
 
-function MetricCard({ label, value, sub, color = 'purple' }: { label: string; value: string; sub?: string; color?: string }) {
+function MetricCard({ label, value, sub, color = 'cyan' }: { label: string; value: string; sub?: string; color?: string }) {
   const colors: Record<string, string> = {
-    purple: 'border-purple-500/20 bg-purple-500/5',
+    cyan: 'border-cyan-500/20 bg-cyan-500/5',
     green: 'border-green-500/20 bg-green-500/5',
     blue: 'border-blue-500/20 bg-blue-500/5',
     red: 'border-red-500/20 bg-red-500/5',
   }
   return (
-    <div className={`border rounded-2xl p-5 ${colors[color] || colors.purple}`}>
+    <div className={`border rounded-2xl p-5 ${colors[color] || colors.cyan}`}>
       <p className="text-gray-400 text-sm mb-2">{label}</p>
       <p className="text-2xl font-bold text-white">{value}</p>
       {sub && <p className="text-xs text-gray-500 mt-1">{sub}</p>}
@@ -85,7 +85,7 @@ export default function CreativoPage({ params }: { params: { id: string } }) {
       {/* Stats row */}
       <div className="grid grid-cols-4 gap-4 mb-8">
         <MetricCard label="Visualizações" value={creative.views.toLocaleString('pt-BR')} sub="nos últimos 7 dias" color="blue" />
-        <MetricCard label="Cliques" value={creative.clicks.toLocaleString('pt-BR')} sub={`CTR: ${((creative.clicks/creative.views)*100).toFixed(1)}%`} color="purple" />
+        <MetricCard label="Cliques" value={creative.clicks.toLocaleString('pt-BR')} sub={`CTR: ${((creative.clicks/creative.views)*100).toFixed(1)}%`} color="cyan" />
         <MetricCard label="Vendas" value={creative.sales.toString()} sub="atribuídas ao criativo" color="green" />
         <MetricCard label="Receita" value={`R$${creative.revenue.toLocaleString('pt-BR')}`} sub={`R$${Math.round(creative.revenue/creative.sales)} por venda`} color="green" />
       </div>
@@ -99,7 +99,7 @@ export default function CreativoPage({ params }: { params: { id: string } }) {
           </div>
           <div className="flex gap-4 text-xs">
             <div className="flex items-center gap-1.5"><div className="w-3 h-0.5 bg-green-400/60 border-dashed border-t border-green-400" /><span className="text-gray-400">Fim do Hook ({creative.hookEnd}s)</span></div>
-            <div className="flex items-center gap-1.5"><div className="w-3 h-0.5 bg-purple-400/60 border-dashed border-t border-purple-400" /><span className="text-gray-400">Início do CTA ({creative.ctaStart}s)</span></div>
+            <div className="flex items-center gap-1.5"><div className="w-3 h-0.5 bg-cyan-400/60 border-dashed border-t border-cyan-400" /><span className="text-gray-400">Início do CTA ({creative.ctaStart}s)</span></div>
           </div>
         </div>
         <RetentionChart
@@ -179,7 +179,7 @@ export default function CreativoPage({ params }: { params: { id: string } }) {
 
         <Link
           href="/dashboard/ia"
-          className="mt-4 flex items-center gap-2 text-sm text-purple-400 hover:text-purple-300 transition-colors"
+          className="mt-4 flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition-colors"
         >
           <span>💬</span> Conversar com a IA sobre este criativo →
         </Link>
@@ -187,13 +187,13 @@ export default function CreativoPage({ params }: { params: { id: string } }) {
 
       {/* Actions */}
       <div className="grid grid-cols-2 gap-4">
-        <div className="bg-[#0D1117] border border-dashed border-purple-500/30 rounded-2xl p-5 flex items-center gap-4">
+        <div className="bg-[#0D1117] border border-dashed border-cyan-500/30 rounded-2xl p-5 flex items-center gap-4">
           <span className="text-3xl">⚡</span>
           <div className="flex-1">
             <p className="text-white font-semibold">Fábrica Frankstein</p>
             <p className="text-gray-400 text-sm">Crie variações trocando hook, body ou CTA</p>
           </div>
-          <span className="text-xs bg-purple-500/20 text-purple-400 px-2 py-1 rounded-full">Pro</span>
+          <span className="text-xs bg-cyan-500/20 text-cyan-400 px-2 py-1 rounded-full">Pro</span>
         </div>
         <div className="bg-[#0D1117] border border-dashed border-blue-500/30 rounded-2xl p-5 flex items-center gap-4">
           <span className="text-3xl">📈</span>

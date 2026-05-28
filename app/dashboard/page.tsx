@@ -19,7 +19,7 @@ function ScoreRing({ score }: { score: number }) {
 }
 
 function MetricBar({ label, value }: { label: string; value: number }) {
-  const color = value >= 70 ? 'bg-green-400' : value >= 50 ? 'bg-purple-500' : 'bg-red-400'
+  const color = value >= 70 ? 'bg-green-400' : value >= 50 ? 'bg-cyan-500' : 'bg-red-400'
   return (
     <div className="flex-1">
       <div className="flex justify-between text-xs mb-1">
@@ -68,7 +68,7 @@ export default async function DashboardPage() {
           <p className="text-gray-400 text-sm mt-1">Veja o desempenho dos seus criativos hoje.</p>
         </div>
         {profile?.plan === 'trial' && (
-          <Link href="/dashboard/planos" className="bg-purple-600 hover:bg-purple-500 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-colors">
+          <Link href="/dashboard/planos" className="bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-colors">
             Assinar agora
           </Link>
         )}
@@ -110,7 +110,7 @@ export default async function DashboardPage() {
       {/* Creatives */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-base font-semibold text-white">Seus Criativos</h2>
-        <Link href="/dashboard/criativos" className="text-sm text-purple-400 hover:text-purple-300 transition-colors">
+        <Link href="/dashboard/criativos" className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors">
           Ver todos →
         </Link>
       </div>
@@ -120,7 +120,7 @@ export default async function DashboardPage() {
           const status = statusConfig[creative.status]
           return (
             <Link key={creative.id} href={`/dashboard/criativos/${creative.id}`}>
-              <div className="bg-[#0D1117] border border-white/6 rounded-2xl p-5 hover:border-purple-500/25 transition-all group cursor-pointer">
+              <div className="bg-[#0D1117] border border-white/6 rounded-2xl p-5 hover:border-cyan-500/25 transition-all group cursor-pointer">
                 <div className="flex items-center gap-4">
                   <div className="w-20 h-12 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0 border border-white/8">
                     <span className="text-xl">🎬</span>
@@ -128,7 +128,7 @@ export default async function DashboardPage() {
                   <ScoreRing score={creative.score} />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-2">
-                      <h3 className="text-white font-medium text-sm truncate group-hover:text-purple-300 transition-colors">
+                      <h3 className="text-white font-medium text-sm truncate group-hover:text-cyan-300 transition-colors">
                         {creative.name}
                       </h3>
                       <span className={`text-xs px-2 py-0.5 rounded-full border flex-shrink-0 ${status.bg} ${status.color}`}>
@@ -145,7 +145,7 @@ export default async function DashboardPage() {
                     <p className="text-lg font-bold text-white">R${creative.revenue.toLocaleString('pt-BR')}</p>
                     <p className="text-xs text-gray-500">{creative.sales} vendas</p>
                   </div>
-                  <span className="text-gray-600 group-hover:text-purple-400 transition-colors text-sm">→</span>
+                  <span className="text-gray-600 group-hover:text-cyan-400 transition-colors text-sm">→</span>
                 </div>
               </div>
             </Link>
@@ -155,9 +155,9 @@ export default async function DashboardPage() {
 
       {/* Quick actions */}
       <div className="grid grid-cols-3 gap-4">
-        <Link href="/dashboard/ia" className="bg-[#0D1117] border border-white/6 hover:border-purple-500/25 rounded-2xl p-5 transition-all group">
+        <Link href="/dashboard/ia" className="bg-[#0D1117] border border-white/6 hover:border-cyan-500/25 rounded-2xl p-5 transition-all group">
           <span className="text-2xl mb-3 block">🤖</span>
-          <p className="text-white font-semibold text-sm group-hover:text-purple-300 transition-colors">IA de Sugestões</p>
+          <p className="text-white font-semibold text-sm group-hover:text-cyan-300 transition-colors">IA de Sugestões</p>
           <p className="text-gray-500 text-xs mt-1">Pergunte sobre seus criativos</p>
         </Link>
         <Link href="/dashboard/timelapse" className="bg-[#0D1117] border border-white/6 hover:border-blue-500/25 rounded-2xl p-5 transition-all group">
@@ -169,7 +169,7 @@ export default async function DashboardPage() {
           <span className="text-2xl mb-3 block">⚡</span>
           <div className="flex items-center gap-2">
             <p className="text-white font-semibold text-sm group-hover:text-yellow-300 transition-colors">Fábrica Frankstein</p>
-            <span className="text-[10px] bg-purple-500/20 text-purple-400 px-1.5 py-0.5 rounded-full">Pro</span>
+            <span className="text-[10px] bg-cyan-500/20 text-cyan-400 px-1.5 py-0.5 rounded-full">Pro</span>
           </div>
           <p className="text-gray-500 text-xs mt-1">Crie variações em 1 clique</p>
         </Link>
@@ -177,12 +177,12 @@ export default async function DashboardPage() {
 
       {/* Trial notice */}
       {profile?.plan === 'trial' && (
-        <div className="mt-6 bg-gradient-to-r from-purple-600/10 to-blue-600/10 border border-purple-500/20 rounded-2xl p-5 flex items-center justify-between">
+        <div className="mt-6 bg-gradient-to-r from-cyan-600/10 to-blue-600/10 border border-cyan-500/20 rounded-2xl p-5 flex items-center justify-between">
           <div>
             <p className="text-white font-semibold text-sm">Trial expira em {trialDaysLeft} dias</p>
             <p className="text-gray-400 text-xs mt-0.5">Faça upgrade para continuar usando após o período</p>
           </div>
-          <Link href="/dashboard/planos" className="bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors whitespace-nowrap">
+          <Link href="/dashboard/planos" className="bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors whitespace-nowrap">
             Ver planos
           </Link>
         </div>

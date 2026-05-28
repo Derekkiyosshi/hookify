@@ -8,20 +8,20 @@ export default function FranksteinPage() {
         <div>
           <div className="flex items-center gap-3 mb-1">
             <h1 className="text-2xl font-bold text-white">Fábrica Frankstein</h1>
-            <span className="text-xs bg-purple-500/20 text-purple-400 border border-purple-500/30 px-2.5 py-1 rounded-full font-medium">Pro</span>
+            <span className="text-xs bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 px-2.5 py-1 rounded-full font-medium">Pro</span>
           </div>
           <p className="text-gray-400 text-sm">Crie novos criativos combinando o melhor de cada um — hook, body e CTA</p>
         </div>
       </div>
 
       {/* Upgrade gate */}
-      <div className="bg-purple-500/5 border border-purple-500/20 rounded-2xl p-8 mb-8 text-center">
+      <div className="bg-cyan-500/5 border border-cyan-500/20 rounded-2xl p-8 mb-8 text-center">
         <div className="text-5xl mb-4">⚡</div>
         <h2 className="text-white text-xl font-bold mb-2">Disponível no Plano Pro</h2>
         <p className="text-gray-400 text-sm max-w-md mx-auto mb-6">
           Misture hooks, bodies e CTAs dos seus melhores criativos e gere variações prontas para subir na Meta — tudo com 1 clique.
         </p>
-        <Link href="/dashboard/planos" className="inline-block bg-purple-600 hover:bg-purple-500 text-white font-semibold px-6 py-3 rounded-xl transition-colors">
+        <Link href="/dashboard/planos" className="inline-block bg-cyan-600 hover:bg-cyan-500 text-white font-semibold px-6 py-3 rounded-xl transition-colors">
           Fazer upgrade para Pro — R$297/mês
         </Link>
         <p className="text-gray-600 text-xs mt-3">7 dias grátis · Cancele quando quiser</p>
@@ -47,12 +47,12 @@ export default function FranksteinPage() {
                     <div
                       key={c.id}
                       className={`flex items-center gap-2 p-2.5 rounded-xl border text-sm cursor-pointer transition-colors ${
-                        i === pi ? 'border-purple-500/40 bg-purple-500/10 text-white' : 'border-white/6 text-gray-400'
+                        i === pi ? 'border-cyan-500/40 bg-cyan-500/10 text-white' : 'border-white/6 text-gray-400'
                       }`}
                     >
                       <span className="text-base">🎬</span>
                       <span className="truncate text-xs">{c.name.split(' — ')[0]}</span>
-                      {i === pi && <span className="ml-auto text-purple-400 text-xs">✓</span>}
+                      {i === pi && <span className="ml-auto text-cyan-400 text-xs">✓</span>}
                     </div>
                   ))}
                 </div>
@@ -67,7 +67,7 @@ export default function FranksteinPage() {
                 Hook de "Hook Dor nas Costas" + Body de "Antes e Depois" + CTA de "Depoimento Cláudia"
               </p>
             </div>
-            <button className="bg-purple-600 text-white text-sm font-medium px-5 py-2.5 rounded-xl">
+            <button className="bg-cyan-600 text-white text-sm font-medium px-5 py-2.5 rounded-xl">
               Gerar criativo ⚡
             </button>
           </div>

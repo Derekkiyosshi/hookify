@@ -33,9 +33,9 @@ export default function DashboardHeader({ userName, trialDaysLeft = 7, notificat
         {trialDaysLeft <= 7 && (
           <Link
             href="/dashboard/planos"
-            className="hidden sm:flex items-center gap-2 bg-purple-500/10 border border-purple-500/20 hover:border-purple-500/40 text-purple-300 text-xs font-medium px-3 py-1.5 rounded-xl transition-all"
+            className="hidden sm:flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/20 hover:border-cyan-500/40 text-cyan-300 text-xs font-medium px-3 py-1.5 rounded-xl transition-all"
           >
-            <span className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse" />
+            <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse" />
             Trial · {trialDaysLeft} dias
           </Link>
         )}
@@ -44,7 +44,7 @@ export default function DashboardHeader({ userName, trialDaysLeft = 7, notificat
         <button className="relative w-9 h-9 flex items-center justify-center rounded-xl hover:bg-white/8 transition-colors">
           <span className="text-lg">🔔</span>
           {notificationCount > 0 && (
-            <span className="absolute top-1 right-1 w-4 h-4 bg-purple-600 rounded-full text-white text-[10px] font-bold flex items-center justify-center">
+            <span className="absolute top-1 right-1 w-4 h-4 bg-cyan-600 rounded-full text-white text-[10px] font-bold flex items-center justify-center">
               {notificationCount}
             </span>
           )}
@@ -52,7 +52,7 @@ export default function DashboardHeader({ userName, trialDaysLeft = 7, notificat
 
         {/* Avatar */}
         <Link href="/dashboard/conta">
-          <div className="w-9 h-9 bg-purple-600/30 border border-purple-500/20 rounded-xl flex items-center justify-center text-sm font-bold text-purple-300 hover:bg-purple-600/40 transition-colors">
+          <div className="w-9 h-9 bg-cyan-600/30 border border-cyan-500/20 rounded-xl flex items-center justify-center text-sm font-bold text-cyan-300 hover:bg-cyan-600/40 transition-colors">
             {userName?.charAt(0).toUpperCase() || 'U'}
           </div>
         </Link>
