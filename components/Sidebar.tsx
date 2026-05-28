@@ -41,7 +41,8 @@ export default function Sidebar({ userName, userEmail, plan = 'trial', trialDays
     <aside className="w-64 h-screen bg-[#0A0C13] border-r border-white/6 flex flex-col flex-shrink-0">
       {/* Logo */}
       <div className="px-6 py-5 border-b border-white/6">
-        <Link href="/dashboard">
+        <Link href="/dashboard" className="flex items-center gap-2.5 no-underline">
+          <img src="/logo.svg" alt="Hookify" style={{ width: 30, height: 30, objectFit: 'contain' }} />
           <span className="text-xl font-bold gradient-text">Hookify</span>
         </Link>
       </div>

@@ -75,20 +75,7 @@ export default function SignupPage() {
         {/* Logo */}
         <div style={{ position: 'relative', zIndex: 1, marginBottom: 64 }}>
           <Link href="/" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 12 }}>
-            <div style={{
-              width: 38, height: 38,
-              background: 'linear-gradient(135deg, #00FF9A 0%, #00CFFF 60%, #0088BB 100%)',
-              borderRadius: 10,
-              boxShadow: '0 0 0 1px rgba(0,207,255,.35), 0 8px 24px rgba(0,207,255,.30)',
-              position: 'relative', flexShrink: 0,
-            }}>
-              <div style={{
-                position: 'absolute', inset: 9,
-                borderLeft: '2.5px solid rgba(255,255,255,.85)',
-                borderRight: '2.5px solid rgba(255,255,255,.85)',
-                borderRadius: 2,
-              }} />
-            </div>
+            <img src="/logo.svg" alt="Hookify" style={{ width: 38, height: 38, objectFit: 'contain' }} />
             <span style={{ fontSize: 22, fontWeight: 700, letterSpacing: '-0.02em', color: '#F2F5FA' }}>Hookify</span>
           </Link>
         </div>

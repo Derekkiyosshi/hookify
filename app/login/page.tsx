@@ -63,19 +63,7 @@ export default function LoginPage() {
         {/* Topo: logo + botão voltar */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 60, position: 'relative', zIndex: 1 }}>
           <Link href="/" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 10 }}>
-            {/* Logo mark */}
-            <div style={{
-              width: 34, height: 34, borderRadius: 9, position: 'relative', flexShrink: 0,
-              background: 'linear-gradient(135deg, #00FF9A 0%, #00CFFF 60%, #0088BB 100%)',
-              boxShadow: '0 0 0 1px rgba(0,207,255,.30), 0 6px 20px rgba(0,207,255,.28)',
-            }}>
-              <div style={{
-                position: 'absolute', inset: 8,
-                borderLeft: '2px solid rgba(255,255,255,.9)',
-                borderRight: '2px solid rgba(255,255,255,.9)',
-                borderRadius: 2,
-              }} />
-            </div>
+            <img src="/logo.svg" alt="Hookify" style={{ width: 36, height: 36, objectFit: 'contain' }} />
             <span style={{ fontSize: 19, fontWeight: 700, color: '#F2F5FA', letterSpacing: '-0.02em' }}>Hookify</span>
           </Link>
           <Link href="/" style={{
