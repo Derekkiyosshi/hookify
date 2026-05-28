@@ -82,7 +82,6 @@ export default function ContaPage() {
 
       {/* Perfil */}
       <div style={card}>
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'linear-gradient(90deg, transparent, rgba(0,207,255,0.4), transparent)', borderRadius: '18px 18px 0 0', position: 'relative' as any }} />
         <h2 style={{ fontSize: 15, fontWeight: 600, color: '#F2F5FA', marginBottom: 20 }}>Perfil</h2>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
