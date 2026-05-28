@@ -63,7 +63,7 @@ export default function LoginPage() {
         {/* Topo: logo + botão voltar */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 60, position: 'relative', zIndex: 1 }}>
           <Link href="/" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 10 }}>
-            <img src="/logo.svg" alt="Hookify" style={{ width: 36, height: 36, objectFit: 'contain' }} />
+            <img src="/logo.png" alt="Hookify" style={{ width: 36, height: 36, objectFit: 'contain' }} />
             <span style={{ fontSize: 19, fontWeight: 700, color: '#F2F5FA', letterSpacing: '-0.02em' }}>Hookify</span>
           </Link>
           <Link href="/" style={{
