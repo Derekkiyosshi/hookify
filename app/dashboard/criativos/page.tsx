@@ -45,8 +45,15 @@ export default function CriativosPage() {
           <h1 className="text-2xl font-bold text-white">Criativos</h1>
           <p className="text-gray-400 text-sm mt-1">{mockCreatives.length} criativos analisados · {total.views.toLocaleString('pt-BR')} views · {total.sales} vendas</p>
         </div>
-        <button className="bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-colors flex items-center gap-2">
-          <span>+</span> Adicionar criativo
+        <button
+          onClick={() => alert('Conecte sua conta do Meta Ads primeiro para importar criativos automaticamente.')}
+          style={{
+            background: 'linear-gradient(135deg, #00CFFF 0%, #00FF7F 100%)',
+            border: 'none', borderRadius: 12, padding: '10px 18px',
+            color: '#060A18', fontSize: 13, fontWeight: 700, cursor: 'pointer',
+            boxShadow: '0 4px 16px rgba(0,207,255,0.28)',
+          }}>
+          + Adicionar criativo
         </button>
       </div>
 

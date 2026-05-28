@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 
 const plans = [
@@ -15,11 +17,7 @@ const plans = [
       'Score do Criativo',
       'Notificações in-app',
     ],
-    locked: [
-      'Fábrica Frankstein',
-      'Comparação lado a lado',
-      'Time-Lapse 30 dias',
-    ],
+    locked: ['Fábrica Frankstein', 'Comparação lado a lado', 'Time-Lapse 30 dias'],
   },
   {
     name: 'Pro',
@@ -49,7 +47,7 @@ const plans = [
     features: [
       'Tudo do Pro',
       'Múltiplas contas Meta Ads',
-      'Dashboard da Operação completo',
+      'Dashboard da Operação',
       'Relatórios personalizados',
       'API de integração',
       'Suporte prioritário',
@@ -59,76 +57,117 @@ const plans = [
   },
 ]
 
+function handleAssinar(planName: string) {
+  alert(`Integração com Stripe em breve! Plano ${planName} estará disponível para assinatura em breve.`)
+}
+
 export default function PlanosPage() {
   return (
-    <div className="p-8 max-w-6xl mx-auto">
-      <div className="text-center mb-12">
-        <h1 className="text-3xl font-bold text-white mb-3">Escolha seu plano</h1>
-        <p className="text-gray-400">
-          Todos os planos incluem 7 dias grátis. Cancele quando quiser.
-        </p>
+    <div style={{ padding: '32px', maxWidth: 1100, margin: '0 auto' }}>
+
+      <div style={{ textAlign: 'center', marginBottom: 48 }}>
+        <div style={{
+          display: 'inline-flex', alignItems: 'center', gap: 7,
+          background: 'rgba(0,207,255,0.08)', border: '1px solid rgba(0,207,255,0.20)',
+          borderRadius: 100, padding: '5px 14px', marginBottom: 18,
+        }}>
+          <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#00CFFF', boxShadow: '0 0 6px #00CFFF', display: 'inline-block' }} />
+          <span style={{ fontSize: 12, color: '#00E5FF', fontWeight: 500, letterSpacing: '0.02em' }}>7 dias grátis em qualquer plano</span>
+        </div>
+        <h1 style={{ fontSize: 32, fontWeight: 700, color: '#F2F5FA', letterSpacing: '-0.02em', marginBottom: 10 }}>Escolha seu plano</h1>
+        <p style={{ fontSize: 15, color: '#4A5560' }}>Cancele quando quiser. Sem multa, sem fidelidade.</p>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
         {plans.map(plan => (
           <div
             key={plan.name}
-            className={`relative rounded-2xl p-6 flex flex-col ${
-              plan.highlight
-                ? 'bg-cyan-600/10 border-2 border-cyan-500/50'
-                : 'bg-[#0D1117] border border-white/8'
-            }`}
+            style={{
+              position: 'relative',
+              borderRadius: 20, padding: '28px 26px',
+              display: 'flex', flexDirection: 'column',
+              background: plan.highlight
+                ? 'linear-gradient(145deg, rgba(0,207,255,0.08) 0%, rgba(0,255,127,0.04) 100%)'
+                : '#0A0D18',
+              border: plan.highlight
+                ? '1px solid rgba(0,207,255,0.40)'
+                : '1px solid rgba(255,255,255,0.07)',
+              boxShadow: plan.highlight
+                ? '0 0 60px rgba(0,207,255,0.10), 0 0 0 1px rgba(0,207,255,0.08)'
+                : 'none',
+            }}
           >
+            {/* Gradient top line for Pro */}
+            {plan.highlight && (
+              <div style={{
+                position: 'absolute', top: 0, left: 0, right: 0, height: 1,
+                background: 'linear-gradient(90deg, transparent, rgba(0,207,255,0.8), rgba(0,255,127,0.6), transparent)',
+                borderRadius: '20px 20px 0 0',
+              }} />
+            )}
+
             {plan.badge && (
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                <span className="bg-cyan-600 text-white text-xs font-semibold px-4 py-1 rounded-full">
-                  {plan.badge}
-                </span>
+              <div style={{
+                position: 'absolute', top: -13, left: '50%', transform: 'translateX(-50%)',
+              }}>
+                <span style={{
+                  fontSize: 11, fontWeight: 700, color: '#060A18',
+                  background: 'linear-gradient(135deg, #00CFFF 0%, #00FF7F 100%)',
+                  padding: '4px 16px', borderRadius: 100, whiteSpace: 'nowrap',
+                }}>{plan.badge}</span>
               </div>
             )}
 
-            <div className="mb-6">
-              <h2 className="text-lg font-bold text-white mb-1">{plan.name}</h2>
-              <p className="text-gray-400 text-sm mb-4">{plan.description}</p>
-              <div className="flex items-end gap-1">
-                <span className="text-4xl font-bold text-white">R${plan.price}</span>
-                <span className="text-gray-400 mb-1">/mês</span>
+            <div style={{ marginBottom: 24 }}>
+              <h2 style={{ fontSize: 18, fontWeight: 700, color: '#F2F5FA', marginBottom: 6 }}>{plan.name}</h2>
+              <p style={{ fontSize: 13, color: '#4A5560', marginBottom: 18, lineHeight: 1.5 }}>{plan.description}</p>
+              <div style={{ display: 'flex', alignItems: 'flex-end', gap: 4 }}>
+                <span style={{ fontSize: 13, color: '#4A5560', marginBottom: 5 }}>R$</span>
+                <span style={{ fontSize: 40, fontWeight: 700, color: '#F2F5FA', letterSpacing: '-0.03em', lineHeight: 1 }}>{plan.price}</span>
+                <span style={{ fontSize: 13, color: '#4A5560', marginBottom: 5 }}>/mês</span>
               </div>
             </div>
 
-            <ul className="space-y-2.5 flex-1 mb-6">
-              {plan.features.map(feature => (
-                <li key={feature} className="flex items-start gap-2.5 text-sm">
-                  <span className="text-green-400 mt-0.5 flex-shrink-0">✓</span>
-                  <span className="text-gray-300">{feature}</span>
+            <ul style={{ flex: 1, marginBottom: 24, display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {plan.features.map(feat => (
+                <li key={feat} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 13 }}>
+                  <span style={{ color: '#00FF7F', flexShrink: 0, marginTop: 1 }}>✓</span>
+                  <span style={{ color: '#C2CAD8' }}>{feat}</span>
                 </li>
               ))}
-              {plan.locked.map(feature => (
-                <li key={feature} className="flex items-start gap-2.5 text-sm opacity-40">
-                  <span className="text-gray-500 mt-0.5 flex-shrink-0">✕</span>
-                  <span className="text-gray-500">{feature}</span>
+              {plan.locked.map(feat => (
+                <li key={feat} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 13, opacity: 0.35 }}>
+                  <span style={{ color: '#4A5560', flexShrink: 0, marginTop: 1 }}>✕</span>
+                  <span style={{ color: '#4A5560' }}>{feat}</span>
                 </li>
               ))}
             </ul>
 
             <button
-              className={`w-full py-3 rounded-xl font-semibold text-sm transition-colors ${
-                plan.highlight
-                  ? 'bg-cyan-600 hover:bg-cyan-500 text-white'
-                  : 'bg-white/8 hover:bg-white/12 text-white border border-white/10'
-              }`}
+              onClick={() => handleAssinar(plan.name)}
+              style={{
+                width: '100%', padding: '13px', borderRadius: 12,
+                border: 'none', cursor: 'pointer',
+                fontSize: 14, fontWeight: 600,
+                background: plan.highlight
+                  ? 'linear-gradient(135deg, #00CFFF 0%, #00FF7F 100%)'
+                  : 'rgba(255,255,255,0.07)',
+                color: plan.highlight ? '#060A18' : '#F2F5FA',
+                boxShadow: plan.highlight ? '0 6px 24px rgba(0,207,255,0.30)' : 'none',
+                transition: 'opacity 0.2s',
+              }}
             >
-              Assinar {plan.name}
+              Assinar {plan.name} →
             </button>
           </div>
         ))}
       </div>
 
-      <p className="text-center text-gray-500 text-sm mt-8">
+      <p style={{ textAlign: 'center', fontSize: 13, color: '#4A5560', marginTop: 32 }}>
         Tem dúvidas?{' '}
-        <Link href="https://wa.me/5511999999999" className="text-cyan-400 hover:text-cyan-300 transition-colors">
-          Fale com a gente no WhatsApp
-        </Link>
+        <a href="https://wa.me/5511999999999" style={{ color: '#00CFFF', textDecoration: 'none', fontWeight: 500 }}>
+          Fale com a gente no WhatsApp →
+        </a>
       </p>
     </div>
   )

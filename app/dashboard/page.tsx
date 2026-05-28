@@ -3,31 +3,31 @@ import Link from 'next/link'
 import { mockCreatives, statusConfig } from '@/lib/mockData'
 
 function ScoreRing({ score }: { score: number }) {
-  const color = score >= 80 ? '#22c55e' : score >= 60 ? '#3b82f6' : score >= 40 ? '#eab308' : '#ef4444'
+  const color = score >= 80 ? '#22c55e' : score >= 60 ? '#00CFFF' : score >= 40 ? '#eab308' : '#ef4444'
   return (
-    <div className="relative w-12 h-12 flex-shrink-0">
-      <svg className="w-12 h-12 -rotate-90" viewBox="0 0 48 48">
-        <circle cx="24" cy="24" r="20" fill="none" stroke="#ffffff10" strokeWidth="3.5" />
+    <div style={{ position: 'relative', width: 48, height: 48, flexShrink: 0 }}>
+      <svg width="48" height="48" style={{ transform: 'rotate(-90deg)' }} viewBox="0 0 48 48">
+        <circle cx="24" cy="24" r="20" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="3.5" />
         <circle cx="24" cy="24" r="20" fill="none" stroke={color} strokeWidth="3.5"
           strokeLinecap="round" strokeDasharray={`${(score / 100) * 125.6} 125.6`} />
       </svg>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-xs font-bold text-white">{score}</span>
+      <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <span style={{ fontSize: 12, fontWeight: 700, color: '#fff' }}>{score}</span>
       </div>
     </div>
   )
 }
 
 function MetricBar({ label, value }: { label: string; value: number }) {
-  const color = value >= 70 ? 'bg-green-400' : value >= 50 ? 'bg-cyan-500' : 'bg-red-400'
+  const color = value >= 70 ? '#22c55e' : value >= 50 ? '#00CFFF' : '#ef4444'
   return (
-    <div className="flex-1">
-      <div className="flex justify-between text-xs mb-1">
-        <span className="text-gray-500">{label}</span>
-        <span className="text-white font-medium">{value}%</span>
+    <div style={{ flex: 1 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 4 }}>
+        <span style={{ color: '#4A5560' }}>{label}</span>
+        <span style={{ color: '#fff', fontWeight: 600 }}>{value}%</span>
       </div>
-      <div className="h-1 bg-white/8 rounded-full">
-        <div className={`h-full rounded-full ${color}`} style={{ width: `${value}%` }} />
+      <div style={{ height: 4, background: 'rgba(255,255,255,0.06)', borderRadius: 100, overflow: 'hidden' }}>
+        <div style={{ height: '100%', width: `${value}%`, background: color, borderRadius: 100 }} />
       </div>
     </div>
   )
@@ -58,95 +58,137 @@ export default async function DashboardPage() {
   const hour = new Date().getHours()
   const greeting = hour < 12 ? 'Bom dia' : hour < 18 ? 'Boa tarde' : 'Boa noite'
 
+  const stats = [
+    { label: 'Criativos Ativos', value: mockCreatives.length.toString(), sub: '0 disponíveis no trial', color: '#00CFFF', icon: '🎬' },
+    { label: 'Views Totais', value: totalViews.toLocaleString('pt-BR'), sub: 'últimos 7 dias', color: '#00E5FF', icon: '👁' },
+    { label: 'Vendas', value: totalSales.toString(), sub: 'via criativos', color: '#00FF7F', icon: '💰' },
+    { label: 'Receita', value: `R$${(totalRevenue / 1000).toFixed(0)}k`, sub: `score médio: ${avgScore}`, color: '#00CFFF', icon: '📈' },
+  ]
+
   return (
-    <div className="p-8 max-w-7xl mx-auto">
+    <div style={{ padding: '32px', maxWidth: 1200, margin: '0 auto' }}>
 
       {/* Header */}
-      <div className="flex items-start justify-between mb-8">
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 32 }}>
         <div>
-          <h1 className="text-2xl font-bold text-white">{greeting}, {firstName} 👋</h1>
-          <p className="text-gray-400 text-sm mt-1">Veja o desempenho dos seus criativos hoje.</p>
+          <h1 style={{ fontSize: 24, fontWeight: 700, color: '#F2F5FA', letterSpacing: '-0.02em', marginBottom: 4 }}>
+            {greeting}, {firstName} 👋
+          </h1>
+          <p style={{ fontSize: 14, color: '#4A5560' }}>Veja o desempenho dos seus criativos hoje.</p>
         </div>
         {profile?.plan === 'trial' && (
-          <Link href="/dashboard/planos" className="bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-colors">
-            Assinar agora
+          <Link href="/dashboard/planos" style={{
+            textDecoration: 'none', fontSize: 13, fontWeight: 600, color: '#060A18',
+            background: 'linear-gradient(135deg, #00CFFF 0%, #00FF7F 100%)',
+            padding: '10px 20px', borderRadius: 12,
+            boxShadow: '0 4px 20px rgba(0,207,255,0.30)',
+          }}>
+            Assinar agora →
           </Link>
         )}
       </div>
 
-      {/* Connect Meta Ads banner */}
-      <div className="bg-[#0D1117] border border-dashed border-blue-500/25 rounded-2xl p-5 mb-8 flex items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <div className="w-11 h-11 bg-blue-500/15 rounded-xl flex items-center justify-center text-xl flex-shrink-0">📘</div>
+      {/* Meta Ads banner */}
+      <div style={{
+        background: 'rgba(0,207,255,0.04)',
+        border: '1px solid rgba(0,207,255,0.18)',
+        borderRadius: 18, padding: '18px 22px', marginBottom: 28,
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+          <div style={{
+            width: 42, height: 42, borderRadius: 12, flexShrink: 0,
+            background: 'rgba(0,207,255,0.10)', border: '1px solid rgba(0,207,255,0.2)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20,
+          }}>📊</div>
           <div>
-            <h3 className="text-white font-semibold text-sm">Conecte sua conta do Meta Ads</h3>
-            <p className="text-gray-400 text-xs mt-0.5">Sincronize seus criativos e veja a análise em tempo real.</p>
+            <h3 style={{ fontSize: 14, fontWeight: 600, color: '#F2F5FA', marginBottom: 3 }}>Conecte sua conta do Meta Ads</h3>
+            <p style={{ fontSize: 12, color: '#4A5560' }}>Sincronize seus criativos e veja a análise em tempo real.</p>
           </div>
         </div>
-        <button className="bg-blue-600 hover:bg-blue-500 text-white font-medium px-4 py-2 rounded-xl transition-colors text-sm whitespace-nowrap flex-shrink-0">
+        <button style={{
+          fontSize: 13, fontWeight: 600, color: '#060A18',
+          background: 'linear-gradient(135deg, #00CFFF 0%, #00FF7F 100%)',
+          border: 'none', borderRadius: 10, padding: '10px 18px', cursor: 'pointer',
+          whiteSpace: 'nowrap', flexShrink: 0,
+          boxShadow: '0 4px 16px rgba(0,207,255,0.28)',
+        }}>
           Conectar Meta →
         </button>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
-        {[
-          { label: 'Criativos Ativos', value: mockCreatives.length.toString(), icon: '🎬', sub: `${3 - mockCreatives.length} disponíveis no trial` },
-          { label: 'Views Totais', value: totalViews.toLocaleString('pt-BR'), icon: '👁', sub: 'últimos 7 dias' },
-          { label: 'Vendas', value: totalSales.toString(), icon: '💰', sub: 'via criativos' },
-          { label: 'Receita', value: `R$${(totalRevenue / 1000).toFixed(0)}k`, icon: '📈', sub: `score médio: ${avgScore}` },
-        ].map(stat => (
-          <div key={stat.label} className="bg-[#0D1117] border border-white/6 rounded-2xl p-5">
-            <div className="flex justify-between items-center mb-3">
-              <span className="text-gray-400 text-xs font-medium">{stat.label}</span>
-              <span className="text-xl">{stat.icon}</span>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 28 }}>
+        {stats.map(stat => (
+          <div key={stat.label} style={{
+            background: '#0A0D18',
+            border: '1px solid rgba(255,255,255,0.06)',
+            borderRadius: 18, padding: '20px',
+            position: 'relative', overflow: 'hidden',
+          }}>
+            <div style={{
+              position: 'absolute', top: 0, left: 0, right: 0, height: 1,
+              background: `linear-gradient(90deg, transparent, ${stat.color}55, transparent)`,
+            }} />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+              <span style={{ fontSize: 12, color: '#4A5560', fontWeight: 500 }}>{stat.label}</span>
+              <span style={{ fontSize: 20 }}>{stat.icon}</span>
             </div>
-            <p className="text-2xl font-bold text-white">{stat.value}</p>
-            <p className="text-xs text-gray-600 mt-1">{stat.sub}</p>
+            <p style={{ fontSize: 26, fontWeight: 700, color: '#F2F5FA', letterSpacing: '-0.02em', marginBottom: 4 }}>{stat.value}</p>
+            <p style={{ fontSize: 11, color: '#2E3845' }}>{stat.sub}</p>
           </div>
         ))}
       </div>
 
-      {/* Creatives */}
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-base font-semibold text-white">Seus Criativos</h2>
-        <Link href="/dashboard/criativos" className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors">
+      {/* Criativos */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+        <h2 style={{ fontSize: 16, fontWeight: 600, color: '#F2F5FA' }}>Seus Criativos</h2>
+        <Link href="/dashboard/criativos" style={{ fontSize: 13, color: '#00CFFF', textDecoration: 'none', fontWeight: 500 }}>
           Ver todos →
         </Link>
       </div>
 
-      <div className="space-y-3 mb-6">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
         {mockCreatives.map(creative => {
           const status = statusConfig[creative.status]
           return (
-            <Link key={creative.id} href={`/dashboard/criativos/${creative.id}`}>
-              <div className="bg-[#0D1117] border border-white/6 rounded-2xl p-5 hover:border-cyan-500/25 transition-all group cursor-pointer">
-                <div className="flex items-center gap-4">
-                  <div className="w-20 h-12 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0 border border-white/8">
-                    <span className="text-xl">🎬</span>
+            <Link key={creative.id} href={`/dashboard/criativos/${creative.id}`} style={{ textDecoration: 'none' }}>
+              <div style={{
+                background: '#0A0D18', border: '1px solid rgba(255,255,255,0.06)',
+                borderRadius: 16, padding: '16px 20px',
+                display: 'flex', alignItems: 'center', gap: 16,
+                transition: 'border-color 0.2s',
+                cursor: 'pointer',
+              }}
+                onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(0,207,255,0.25)')}
+                onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)')}
+              >
+                <div style={{
+                  width: 72, height: 44, background: 'rgba(255,255,255,0.04)',
+                  borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  border: '1px solid rgba(255,255,255,0.06)', flexShrink: 0, fontSize: 18,
+                }}>🎬</div>
+                <ScoreRing score={creative.score} />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                    <h3 style={{ fontSize: 14, fontWeight: 500, color: '#F2F5FA', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {creative.name}
+                    </h3>
+                    <span style={{ fontSize: 11, padding: '2px 8px', borderRadius: 100, flexShrink: 0 }} className={`${status.bg} ${status.color}`}>
+                      {status.label}
+                    </span>
                   </div>
-                  <ScoreRing score={creative.score} />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-2">
-                      <h3 className="text-white font-medium text-sm truncate group-hover:text-cyan-300 transition-colors">
-                        {creative.name}
-                      </h3>
-                      <span className={`text-xs px-2 py-0.5 rounded-full border flex-shrink-0 ${status.bg} ${status.color}`}>
-                        {status.label}
-                      </span>
-                    </div>
-                    <div className="flex gap-3">
-                      <MetricBar label="Hook" value={creative.hookRate} />
-                      <MetricBar label="Body" value={creative.bodyRate} />
-                      <MetricBar label="CTA" value={creative.ctaRate} />
-                    </div>
+                  <div style={{ display: 'flex', gap: 12 }}>
+                    <MetricBar label="Hook" value={creative.hookRate} />
+                    <MetricBar label="Body" value={creative.bodyRate} />
+                    <MetricBar label="CTA" value={creative.ctaRate} />
                   </div>
-                  <div className="text-right flex-shrink-0 ml-2">
-                    <p className="text-lg font-bold text-white">R${creative.revenue.toLocaleString('pt-BR')}</p>
-                    <p className="text-xs text-gray-500">{creative.sales} vendas</p>
-                  </div>
-                  <span className="text-gray-600 group-hover:text-cyan-400 transition-colors text-sm">→</span>
                 </div>
+                <div style={{ textAlign: 'right', flexShrink: 0, marginLeft: 8 }}>
+                  <p style={{ fontSize: 16, fontWeight: 700, color: '#F2F5FA' }}>R${creative.revenue.toLocaleString('pt-BR')}</p>
+                  <p style={{ fontSize: 11, color: '#4A5560' }}>{creative.sales} vendas</p>
+                </div>
+                <span style={{ color: '#2E3845', fontSize: 16 }}>→</span>
               </div>
             </Link>
           )
@@ -154,36 +196,58 @@ export default async function DashboardPage() {
       </div>
 
       {/* Quick actions */}
-      <div className="grid grid-cols-3 gap-4">
-        <Link href="/dashboard/ia" className="bg-[#0D1117] border border-white/6 hover:border-cyan-500/25 rounded-2xl p-5 transition-all group">
-          <span className="text-2xl mb-3 block">🤖</span>
-          <p className="text-white font-semibold text-sm group-hover:text-cyan-300 transition-colors">IA de Sugestões</p>
-          <p className="text-gray-500 text-xs mt-1">Pergunte sobre seus criativos</p>
-        </Link>
-        <Link href="/dashboard/timelapse" className="bg-[#0D1117] border border-white/6 hover:border-blue-500/25 rounded-2xl p-5 transition-all group">
-          <span className="text-2xl mb-3 block">📈</span>
-          <p className="text-white font-semibold text-sm group-hover:text-blue-300 transition-colors">Time-Lapse</p>
-          <p className="text-gray-500 text-xs mt-1">Evolução dos seus criativos</p>
-        </Link>
-        <Link href="/dashboard/frankstein" className="bg-[#0D1117] border border-white/6 hover:border-yellow-500/25 rounded-2xl p-5 transition-all group">
-          <span className="text-2xl mb-3 block">⚡</span>
-          <div className="flex items-center gap-2">
-            <p className="text-white font-semibold text-sm group-hover:text-yellow-300 transition-colors">Fábrica Frankstein</p>
-            <span className="text-[10px] bg-cyan-500/20 text-cyan-400 px-1.5 py-0.5 rounded-full">Pro</span>
-          </div>
-          <p className="text-gray-500 text-xs mt-1">Crie variações em 1 clique</p>
-        </Link>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
+        {[
+          { href: '/dashboard/ia', icon: '🤖', label: 'IA de Sugestões', sub: 'Pergunte sobre seus criativos', accent: '#00CFFF' },
+          { href: '/dashboard/timelapse', icon: '📈', label: 'Time-Lapse', sub: 'Evolução dos seus criativos', accent: '#00E5FF' },
+          { href: '/dashboard/frankstein', icon: '⚡', label: 'Fábrica Frankstein', sub: 'Crie variações em 1 clique', accent: '#00FF7F', pro: true },
+        ].map(item => (
+          <Link key={item.href} href={item.href} style={{ textDecoration: 'none' }}>
+            <div style={{
+              background: '#0A0D18', border: '1px solid rgba(255,255,255,0.06)',
+              borderRadius: 16, padding: '20px',
+              transition: 'border-color 0.2s, background 0.2s', cursor: 'pointer',
+            }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = `${item.accent}40`; (e.currentTarget as HTMLElement).style.background = '#0C1020' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.06)'; (e.currentTarget as HTMLElement).style.background = '#0A0D18' }}
+            >
+              <div style={{
+                width: 40, height: 40, borderRadius: 12, marginBottom: 14,
+                background: `${item.accent}14`, border: `1px solid ${item.accent}28`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18,
+              }}>{item.icon}</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                <p style={{ fontSize: 14, fontWeight: 600, color: '#F2F5FA' }}>{item.label}</p>
+                {item.pro && (
+                  <span style={{ fontSize: 9, fontWeight: 700, textTransform: 'uppercase', background: 'rgba(0,207,255,0.12)', color: '#00CFFF', border: '1px solid rgba(0,207,255,0.22)', padding: '2px 6px', borderRadius: 100 }}>Pro</span>
+                )}
+              </div>
+              <p style={{ fontSize: 12, color: '#4A5560' }}>{item.sub}</p>
+            </div>
+          </Link>
+        ))}
       </div>
 
       {/* Trial notice */}
       {profile?.plan === 'trial' && (
-        <div className="mt-6 bg-gradient-to-r from-cyan-600/10 to-blue-600/10 border border-cyan-500/20 rounded-2xl p-5 flex items-center justify-between">
+        <div style={{
+          marginTop: 20,
+          background: 'linear-gradient(135deg, rgba(0,207,255,0.06) 0%, rgba(0,255,127,0.04) 100%)',
+          border: '1px solid rgba(0,207,255,0.18)',
+          borderRadius: 16, padding: '18px 22px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        }}>
           <div>
-            <p className="text-white font-semibold text-sm">Trial expira em {trialDaysLeft} dias</p>
-            <p className="text-gray-400 text-xs mt-0.5">Faça upgrade para continuar usando após o período</p>
+            <p style={{ fontSize: 14, fontWeight: 600, color: '#F2F5FA', marginBottom: 3 }}>Trial expira em {trialDaysLeft} dias</p>
+            <p style={{ fontSize: 12, color: '#4A5560' }}>Faça upgrade para continuar usando após o período</p>
           </div>
-          <Link href="/dashboard/planos" className="bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors whitespace-nowrap">
-            Ver planos
+          <Link href="/dashboard/planos" style={{
+            textDecoration: 'none', fontSize: 13, fontWeight: 600, color: '#060A18',
+            background: 'linear-gradient(135deg, #00CFFF 0%, #00FF7F 100%)',
+            padding: '10px 20px', borderRadius: 10,
+            boxShadow: '0 4px 16px rgba(0,207,255,0.28)',
+          }}>
+            Ver planos →
           </Link>
         </div>
       )}

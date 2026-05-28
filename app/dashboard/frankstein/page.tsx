@@ -21,8 +21,14 @@ export default function FranksteinPage() {
         <p className="text-gray-400 text-sm max-w-md mx-auto mb-6">
           Misture hooks, bodies e CTAs dos seus melhores criativos e gere variações prontas para subir na Meta — tudo com 1 clique.
         </p>
-        <Link href="/dashboard/planos" className="inline-block bg-cyan-600 hover:bg-cyan-500 text-white font-semibold px-6 py-3 rounded-xl transition-colors">
-          Fazer upgrade para Pro — R$297/mês
+        <Link href="/dashboard/planos" style={{
+          display: 'inline-block', textDecoration: 'none',
+          background: 'linear-gradient(135deg, #00CFFF 0%, #00FF7F 100%)',
+          color: '#060A18', fontWeight: 700, fontSize: 14,
+          padding: '13px 28px', borderRadius: 14,
+          boxShadow: '0 6px 24px rgba(0,207,255,0.30)',
+        }}>
+          Fazer upgrade para Pro — R$297/mês →
         </Link>
         <p className="text-gray-600 text-xs mt-3">7 dias grátis · Cancele quando quiser</p>
       </div>
